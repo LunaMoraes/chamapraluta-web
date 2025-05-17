@@ -40,6 +40,10 @@ export class AppComponent {
         preset: 'fire',
         background: {
           color: '#000000'
+        },
+        fullScreen: { // Ensure particles are in the background
+          enable: true,
+          zIndex: 1 /* Changed from 0 to -1 */
         }
       }
     });

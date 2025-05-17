@@ -12,7 +12,7 @@
 
 .app-banner {
   /* Sophisticated and calm banner background */
-  background-color: #f08833; /* Deep teal */
+  background-color: #f0883381; /* Deep teal */
   color: #ffffff; /* White text for high contrast on dark banner */
   padding: 15px 30px; /* Adjusted padding for a navbar */
   text-align: left; /* Align title to the left */
@@ -22,6 +22,7 @@
   justify-content: space-between; /* Space title and nav */
   align-items: center; /* Vertically align items */
   z-index: 2; /* Ensure banner is above other content */
+  position: relative; /* Added to make z-index effective */
 }
 
 .app-banner h1 {
@@ -63,7 +64,7 @@
 
 .main-content-area {
   padding: 30px;
-  background-color: #ffffff; /* White background for content for max readability */
+  background-color: #ffffffa1; /* White background for content for max readability */
   margin: 20px; /* Optional: adds some spacing around the content box */
   border-radius: 8px; /* Optional: rounded corners for a softer, modern feel */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Optional: subtle shadow for content area */
@@ -71,13 +72,13 @@
   z-index: 1; /* Keep content above particles */
 }
 
-#particles {
+#tsparticles { /* Changed from #particles to #tsparticles */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0; /* Changed from -1 to 0 */
 }
 
 /* Responsive considerations */

@@ -13,33 +13,39 @@ export class CalendarioComponent {
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-calendario',
   standalone: true,
-  imports: [CommonModule], // Importe CommonModule para usar *ngFor e *ngIf
+  imports: [CommonModule],
   templateUrl: './calendario.component.html',
-  styleUrl: './calendario.component.css'
+  styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent {
-  // Dados da planilha (simulados ou carregados)
-  planilhaDados: any[] = [
-    { data: '2023-01-01', evento: 'Ato na Assemblia Municipal', importante: true },
-    { data: '2023-02-14', evento: 'Ato na univerdade x', importante: false },
-    { data: '2023-12-25', evento: 'Ato na prefeitura', importante: true }
-  ];
+  planilhaDados: any[] = [];
 
-  // Ou para carregar de um arquivo Excel (opcional)
-  carregarPlanilha(event: any) {
-    const file = event.target.files[0];
-    const fileReader = new FileReader();
+  private carregarDados() {
+
+  }
+  private processarCSV(csvData: string) {
+    const lines = csvData.split('\n');
+    const headers = lines[0].split(',').map(h => h.trim());
     
-    fileReader.onload = (e) => {
-      // Implemente a lógica de leitura do Excel aqui
-      // Você precisaria instalar a biblioteca xlsx
-      console.log('Arquivo carregado:', file.name);
-    };
-    
-    fileReader.readAsArrayBuffer(file);
+    this.planilhaDados = lines.slice(1)
+      .filter(line => line.trim() !== '')
+      .map(line => {
+        const values = line.split(',');
+        return headers.reduce((obj, header, index) => {
+          obj[header] = values[index] ? values[index].trim() : '';
+          
+          // Converter string 'true'/'false' para boolean
+          if (header === 'importante') {
+            obj[header] = values[index] ? values[index].trim().toLowerCase() === 'true' : false;
+          }
+          
+          return obj;
+        }, {} as any);
+      });
   }
 }
