@@ -9,10 +9,11 @@
       <button class="nav-button" (click)="navigateToLogin()">Login</button> 
     </ng-container>
     <button class="nav-button">Baixe o App</button>
-    <button class="nav-button">Calendário de Atos</button>
+    <button class="nav-button" (click)="navigateToCalendario()">Calendário de Atos</button>
   </nav>
 </header>
-
+<div id="tsparticles"></div>
 <main class="main-content-area">
   <router-outlet />
+  <script src="tsparticles.engine.min.js"></script>
 </main>
