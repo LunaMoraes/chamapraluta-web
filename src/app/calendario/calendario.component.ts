@@ -12,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CalendarioComponent implements OnInit { // Implemented OnInit
   planilhaDados: any[] = [];
+  selectedAto: any = null; // To store the selected event for the modal
+  showModal: boolean = false; // To control modal visibility
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +32,6 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   }
 
   private processarCSV(csvData: string) {
-    console.log('CSV Data:', csvData); // Log the raw CSV data for debugging
     const lines = csvData.split('\n');
     const headers = lines[0].split(',').map(h => h.trim());
 
@@ -57,5 +58,17 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
       });
 
       console.log('Processed Data:', this.planilhaDados); // Log the processed data for debugging
+  }
+
+  // Function to open the modal and set the selected event
+  openModal(ato: any) {
+    this.selectedAto = ato;
+    this.showModal = true;
+  }
+
+  // Function to close the modal
+  closeModal() {
+    this.showModal = false;
+    this.selectedAto = null;
   }
 }

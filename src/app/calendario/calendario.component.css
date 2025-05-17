@@ -1,42 +1,68 @@
 .calendario-container {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   }
   
   .upload-section {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    border: 1px dashed #ddd;
+    background-color: #f8fafc;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 2px dashed #e2e8f0;
+    transition: all 0.3s ease;
+  }
+  
+  .upload-section:hover {
+    border-color: #cbd5e1;
+    background-color: #f1f5f9;
   }
   
   .file-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 5px;
+    gap: 12px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
   }
   
+  /* Botão principal estilizado */
   .file-input-label {
-    padding: 8px 16px;
-    background-color: #3f51b5;
+    padding: 10px 20px;
+    background-color: #2563eb;
     color: white;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
-    display: inline-block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
   }
   
   .file-input-label:hover {
-    background-color: #303f9f;
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+  }
+  
+  .file-input-label:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.2);
+  }
+  
+  /* Ícone moderno para o botão */
+  .file-input-label::before {
+    content: "↑";
+    font-size: 16px;
+    font-weight: bold;
   }
   
   .file-input {
@@ -44,77 +70,191 @@
   }
   
   .download-link {
-    color: #3f51b5;
+    color: #2563eb;
     text-decoration: none;
-    border-bottom: 1px dashed #3f51b5;
+    border-bottom: 1px dashed #93c5fd;
     padding-bottom: 2px;
-    transition: all 0.3s;
-    font-size: 14px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
   
   .download-link:hover {
-    color: #303f9f;
-    border-bottom-color: #303f9f;
+    color: #1d4ed8;
+    border-bottom-color: #2563eb;
+  }
+  
+  /* Ícone para o link de download */
+  .download-link::before {
+    content: "↓";
+    font-size: 14px;
   }
   
   .table-container {
     overflow-x: auto;
+    margin: 25px 0;
+    border-radius: 8px;
   }
   
   .eventos-table {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
   }
   
   .eventos-table th, .eventos-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
+    padding: 14px 16px;
     text-align: left;
+    border: 1px solid #e2e8f0;
   }
   
   .eventos-table th {
-    background-color: #3f51b5;
+    background-color: #2563eb;
     color: white;
-    font-weight: normal;
+    font-weight: 500;
+    position: sticky;
+    top: 0;
   }
   
   .eventos-table tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #f8fafc;
   }
   
   .eventos-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f5f9;
   }
   
   .importante {
-    color: gold;
+    color: #f59e0b;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .normal {
-    color: #999;
-    font-size: 18px;
+    color: #94a3b8;
+    font-size: 16px;
   }
   
   .no-data {
     text-align: center;
-    padding: 20px;
-    color: #666;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    margin-top: 20px;
+    padding: 25px;
+    color: #64748b;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    margin-top: 25px;
+    border: 1px dashed #e2e8f0;
   }
   
-  @media (max-width: 600px) {
+  /* Modal styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.2s;
+  }
+  
+  .close-button:hover {
+    color: #334155;
+  }
+  
+  .bar {
+    margin: 5px;
+  }
+  .info-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .info-line:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .info-line p {
+    margin: 0;
+    color: #334155;
+    font-size: 15px;
+  }
+  
+  .info-line p:first-child {
+    font-weight: 500;
+    color: #1e293b;
+  }
+  
+  @media (max-width: 768px) {
     .calendario-container {
-      padding: 15px;
+      padding: 20px;
+      margin: 15px;
     }
     
     .eventos-table th, .eventos-table td {
-      padding: 8px;
+      padding: 10px 12px;
       font-size: 14px;
+    }
+    
+    .file-input-label, .download-link {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+    
+    .modal-content {
+      width: 95%;
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .file-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .info-line {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
     }
   }
