@@ -6,7 +6,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f2f5;
+    background-color: transparent;
 }
 
 .login-container {
@@ -14,12 +14,12 @@ body {
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 50%;
 }
 
 h2 {
     text-align: center;
-    color: #1877f2;
+    color: #ad4e00;
     margin-bottom: 30px;
 }
 
@@ -45,7 +45,7 @@ input[type="password"] {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #1877f2;
+    background-color: #ad4e00;
     color: white;
     border: none;
     border-radius: 6px;
@@ -55,7 +55,7 @@ button {
 }
 
 button:hover {
-    background-color: #166fe5;
+    background-color: #964300;
 }
 
 .options {
@@ -64,7 +64,7 @@ button:hover {
 }
 
 a {
-    color: #1877f2;
+    color: #964300;
     text-decoration: none;
     font-size: 14px;
 }
