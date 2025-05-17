@@ -4,6 +4,7 @@ import { NgIf } from '@angular/common';
 import { tsParticles } from "@tsparticles/engine";
 import { NgParticlesService, NgxParticlesModule } from "@tsparticles/angular";
 import { loadPolygonMaskPlugin } from "@tsparticles/plugin-polygon-mask";
+import { loadFirePreset } from "@tsparticles/preset-fire";
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ export class AppComponent {
 
   async ngOnInit(): Promise<void> {
     await this.particlesService.init(async () => {});
-    await loadPolygonMaskPlugin(tsParticles);
+    await loadFirePreset(tsParticles);
     
     await tsParticles.load({
       id: this.id,

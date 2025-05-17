@@ -1,1 +1,44 @@
-<p>calendario works!</p>
+<!--<p>calendario works!</p>-->
+
+
+
+<div class="calendario-container">
+    <h2>Calendário de Atos</h2>
+    
+    <!-- Opção para carregar arquivo (opcional) -->
+    <div class="upload-section">
+      <input type="file" (change)="carregarPlanilha($event)" accept=".xlsx, .xls" class="file-input">
+      <small>Carregue uma planilha de Atos</small>
+    </div>
+  
+    <!-- Tabela com os dados da planilha -->
+    <table class="eventos-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Evento</th>
+          <th>Importante</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evento of planilhaDados">
+          <td>{{ evento.data }}</td>
+          <td>{{ evento.evento }}</td>
+          <td>
+            <span *ngIf="evento.importante" class="importante">⭐</span>
+            <span *ngIf="!evento.importante" class="normal">➖</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Lista alternativa com filtro -->
+    <h3>Eventos Importantes</h3>
+    <ul class="eventos-lista">
+      <li *ngFor="let evento of planilhaDados">
+        <div *ngIf="evento.importante" class="evento-importante">
+          {{ evento.data }} - {{ evento.evento }}
+        </div>
+      </li>
+    </ul>
+  </div>

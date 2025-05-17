@@ -1,3 +1,4 @@
+<ngx-particles [id]="id"></ngx-particles>
 <header class="app-banner">
   <h1>Chama Pra Luta</h1>
   <nav class="app-nav">
@@ -12,8 +13,7 @@
     <button class="nav-button" (click)="navigateToCalendario()">Calendário de Atos</button>
   </nav>
 </header>
-<div id="tsparticles"></div>
+
 <main class="main-content-area">
   <router-outlet />
-  <script src="tsparticles.engine.min.js"></script>
 </main>

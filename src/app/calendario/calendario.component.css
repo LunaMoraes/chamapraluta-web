@@ -1,0 +1,47 @@
+.calendario-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .eventos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .eventos-table th, .eventos-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .eventos-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .importante {
+    color: gold;
+    font-weight: bold;
+  }
+  
+  .normal {
+    color: #999;
+  }
+  
+  .eventos-lista {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .evento-importante {
+    background-color: #fff8e1;
+    padding: 10px;
+    margin: 5px 0;
+    border-left: 4px solid gold;
+  }
+  
+  .file-input {
+    margin: 10px 0;
+  }

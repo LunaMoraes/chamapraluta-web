@@ -7,6 +7,7 @@
   color: #333; /* Dark grey for default text, good contrast */
   overflow-x: hidden;
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* Modern, readable sans-serif */
+  position: relative; /* Ensure :host is a positioning context */
 }
 
 .app-banner {
@@ -70,13 +71,13 @@
   z-index: 1; /* Keep content above particles */
 }
 
-#tsparticles {
-  position: absolute;
+#particles {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* Place particles behind other content */
+  z-index: -1;
 }
 
 /* Responsive considerations */
@@ -89,3 +90,4 @@
     font-size: 1.1em;
   }
 }
+
