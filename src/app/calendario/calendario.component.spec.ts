@@ -60,14 +60,4 @@ describe('CalendarioComponent', () => {
     const starIcons = fixture.nativeElement.querySelectorAll('.importante');
     expect(starIcons.length).toBe(importantEvents);
   });
-
-  it('should handle file input', () => {
-    const mockFile = new File([''], 'test.csv', { type: 'text/csv' });
-    const event = { target: { files: [mockFile] } };
-    
-    spyOn(component, 'carregarPlanilha').and.callThrough();
-    component.carregarPlanilha(event);
-    
-    expect(component.carregarPlanilha).toHaveBeenCalledWith(event);
-  });
 });

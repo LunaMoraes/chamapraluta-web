@@ -2,23 +2,29 @@
     <h2>Calendário de Eventos</h2>
     
     <!-- Tabela com os dados da planilha -->
-    <div class="table-container" *ngIf="planilhaDados.length > 0">
+    <div class="table-container">
       <table class="eventos-table">
         <thead>
           <tr>
+            <th>Nome</th>
+            <th>Estado</th>
+            <th>Cidade</th>
+            <th>Local</th>
             <th>Data</th>
-            <th>Evento</th>
-            <th>Importante</th>
+            <th>Horario</th>
+            <th>Categoria</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let evento of planilhaDados">
-            <td>{{ evento.data }}</td>
-            <td>{{ evento.evento }}</td>
-            <td>
-              <span *ngIf="evento.importante" class="importante">⭐</span>
-              <span *ngIf="!evento.importante" class="normal">➖</span>
-            </td>
+          <tr *ngFor="let ato of planilhaDados">
+            <td>{{ ato.Nome }}</td>
+            <td>{{ ato.Estado }}</td>
+            <td>{{ ato.Cidade }}</td>
+            <td>{{ ato.Local }}</td>
+            <td>{{ ato.Data }}</td>
+            <td>{{ ato.Horario }}</td>
+            <td>{{ ato.Categoria }}</td>
+            <td> <button>Info Extra</button></td>
           </tr>
         </tbody>
       </table>
