@@ -1,6 +1,18 @@
-<main class="main">
-  <div class="content">
-  </div>
-</main>
+<header class="app-banner">
+  <h1>Chama Pra Luta</h1>
+  <nav class="app-nav">
+    <button class="nav-button" (click)="navigateToDashboard()">Home</button>
+    <ng-container *ngIf="isLoggedIn"> 
+      <button class="nav-button">Perfil</button>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn==false"> 
+      <button class="nav-button" (click)="navigateToLogin()">Login</button> 
+    </ng-container>
+    <button class="nav-button">Baixe o App</button>
+    <button class="nav-button">Calendário de Atos</button>
+  </nav>
+</header>
 
-<router-outlet />
+<main class="main-content-area">
+  <router-outlet />
+</main>
