@@ -64,7 +64,6 @@
 
 .main-content-area {
   padding: 30px;
-  background-color: #ffffffa1; /* White background for content for max readability */
   margin: 20px; /* Optional: adds some spacing around the content box */
   border-radius: 8px; /* Optional: rounded corners for a softer, modern feel */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Optional: subtle shadow for content area */

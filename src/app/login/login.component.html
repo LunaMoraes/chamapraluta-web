@@ -14,19 +14,64 @@
             <button type="submit">Entrar</button>
         </form>
         <div class="options">
-            <a  (click)="changeLogin('register')">Cadastrar</a>
+            <button class="lowerOptions" (click)="changeLogin('register')">Cadastrar</button>
         </div>
         <div class="options">
-            <a href="#">Esqueceu sua Senha?</a>
+            <button class="lowerOptions" >Esqueceu sua Senha?</button>
         </div>
     </div>
     <div *ngIf="isLogin==1" class="login-container">
         <h2>Cadastro</h2>
         <form action="#" method="post">
             <div class="form-group">
-                <label for="username">Email</label>
-                <input type="text" id="username" name="username" required>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" required>
             </div>
+            <div class="form-group">
+                <label for="nome">email</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="radio">Vai querer chamar manifestações?</label>
+                    <div class="radio-group">
+                    <label>
+                        <input type="radio" name="choice" value="1" (click)="selectOrginzer(1)"> Sim
+                        
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="choice" value="0" (click)="selectOrginzer(0)"> Não
+                    </label>
+                    </div>
+                <div *ngIf="isOrganizerSelected == 1">
+                    <label for="tel" class="form-group">Telefone de Contato</label>
+                    <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
+
+                    <label for="organizacoes">Selecione uma organização:</label>
+<select id="organizacoes" name="organizacao" required>
+  <option value="" disabled selected>Selecione uma opção</option>
+  <option value="PSOL">PSOL</option>
+  <option value="PT">PT</option>
+  <option value="Antiordem">Antiordem</option>
+  <option value="Chama">Chama</option>
+  <option value="ANTRA">ANTRA</option>
+  <option value="IBRAT">IBRAT</option>
+  <option value="Mães pela Diversidade">Mães pela Diversidade</option>
+  <option value="Outro" (select)="selectOther()">Outro</option>
+  <option value="Independente">Independente</option>
+</select>
+<div id="outros-container" style="display: none;">
+  <label for="outros">Especifique:</label>
+  <input type="text" id="outros" name="outros_organizacao">
+</div>
+
+
+                </div>
+               
+                <div *ngIf="isOrganizerSelected == 0">
+                </div>
+                
+            </div> 
             <div class="form-group">
                 <label for="password">Senha</label>
                 <input type="password" id="password" name="password" required>
@@ -37,7 +82,7 @@
             <button class="lowerOptions" (click)="changeLogin('login')">Ja tem uma conta? Acesse!</button>
         </div>
         <div class="options">
-            <a >Esqueceu sua Senha?</a>
+            <button class="lowerOptions" >Esqueceu sua Senha?</button>
         </div>
     </div>
 </body>

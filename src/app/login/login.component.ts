@@ -22,6 +22,13 @@ export class LoginComponent {
       this.isLogin = 2;
     }
   }
+  isOrganizerSelected = 0;
+  selectOrginzer(organizer: number){
+    this.isOrganizerSelected = organizer
+  }
+  selectOther(){
+
+  }
   ngOnInit(): void {
     // Initialize any necessary data or services here
     

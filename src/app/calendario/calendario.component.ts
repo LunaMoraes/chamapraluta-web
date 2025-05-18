@@ -15,17 +15,24 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   selectedAto: any = null; // To store the selected event for the modal
   showModal: boolean = false; // To control modal visibility
   isLoggedIn = false;
+  loadingData = true; 
+  view: string = 'table';
+  userID?: number;
+  userPerms?: number;
 
   constructor(private calendarioService: CalendarioService, private authService: AuthenticationService) {}
 
   ngOnInit(): void { // Added ngOnInit
     this.isLoggedIn = this.authService.isLoggedIn;
+    this.userID = this.authService.getUserId();
+    this.userPerms = this.authService.getUserPerms();
     this.carregarDados();
   }
 
   private carregarDados() {
     this.calendarioService.carregarDados().subscribe(dados => {
       this.planilhaDados = dados;
+      this.loadingData = false;
     });
   }
 
@@ -39,5 +46,9 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   closeModal() {
     this.showModal = false;
     this.selectedAto = null;
+  }
+
+  changeView(view: string) {
+    this.view = view;
   }
 }

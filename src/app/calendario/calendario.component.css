@@ -258,3 +258,10 @@
       gap: 4px;
     }
   }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }

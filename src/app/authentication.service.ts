@@ -4,12 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  adminPerms = 0;
+  userPerms = 2;
   isLoggedIn = true;
   userID = 1;
   constructor() { }
 
   cadastrarUsuario(usuario: any) {
     return 400;
+  }
+
+  getUserId(){
+    return this.userID;
+  }
+  getUserPerms(){
+    return this.userPerms;
   }
 }

@@ -1,50 +1,64 @@
 <div class="calendario-container">
-    <h2>Calendário de Atos</h2>
-    <a class="btn btn-secondary bar" href="https://forms.gle/jPYq32witgHJUgvZ8" target="_blank">Cadastrar Manifestação</a>
-    <a *ngIf="isLoggedIn" class="btn btn-secondary bar" href="https://forms.gle/Ee5bYQY1vCH4pYJF6" target="_blank">Minhas manifestações</a>
-
-    <!-- Tabela com os dados da planilha -->
-    <div class="table-container">
-      <table class="eventos-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Estado</th>
-            <th>Cidade</th>
-            <th>Local</th>
-            <th>Data</th>
-            <th>Horario</th>
-            <th>Categoria</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ato of planilhaDados">
-            <td>{{ ato.Nome }}</td>
-            <td>{{ ato.Estado }}</td>
-            <td>{{ ato.Cidade }}</td>
-            <td>{{ ato.Local }}</td>
-            <td>{{ ato.Data }}</td>
-            <td>{{ ato.Horario }}</td>
-            <td>{{ ato.Categoria }}</td> 
-            <td> <button class="btn btn-dark" (click)="openModal(ato)">Info Extra</button></td>
-          </tr>
-        </tbody>
-      </table>
+  <h2>Calendário de Atos</h2>
+  <!--Nav Buttons-->
+  <div *ngIf="isLoggedIn">
+    <button class="btn btn-secondary bar" (click)="changeView('cadastro')">Cadastrar Manifestaçao</button>
+    <button class="btn btn-secondary bar" (click)="changeView('minhaTabela')">Minhas Manifestações</button>
+  </div>
+  
+  <!--loading spinner-->
+  <div *ngIf="loadingData==true" class="spinner-container">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <button class="close-button" (click)="closeModal()">X</button>
-    <div *ngIf="selectedAto">
-      <h3>Detalhes do Evento: {{ selectedAto.Nome }}</h3>
-      <p><strong>Estado:</strong> {{ selectedAto.Estado }} <strong>Cidade:</strong> {{ selectedAto.Cidade }}</p>
-      <p><strong>Local:</strong> {{ selectedAto.Local }} <strong>Horário:</strong> {{ selectedAto.Horario }} <strong>Data:</strong> {{ selectedAto.Data }}</p>
-      <p><strong>Categoria:</strong> {{ selectedAto.Categoria }}</p>
-      <p><strong>Descrição:</strong> {{ selectedAto.Descricao }}</p>
-      <p><strong>Organização:</strong> {{ selectedAto.Org }}</p> 
-      <p><a href="{{ selectedAto.Contato }}" class="btn btn-primary" target="_blank">Faça parte da Organização do Ato</a></p> 
+  <!-- Tabela com os dados da planilha -->
+  <div *ngIf="loadingData==false && view=='table'" class="table-container">
+    <table class="eventos-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Estado</th>
+          <th>Cidade</th>
+          <th>Local</th>
+          <th>Data</th>
+          <th>Horario</th>
+          <th>Categoria</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ato of planilhaDados">
+          <td>{{ ato.Nome }}</td>
+          <td>{{ ato.Estado }}</td>
+          <td>{{ ato.Cidade }}</td>
+          <td>{{ ato.Local }}</td>
+          <td>{{ ato.Data }}</td>
+          <td>{{ ato.Horario }}</td>
+          <td>{{ ato.Categoria }}</td> 
+          <td> 
+            <button class="btn btn-dark" (click)="openModal(ato)">Info Extra</button>
+            <button *ngIf="userID==ato.ownerID || userPerms==2" class="btn btn-dark" (click)="openModal(ato)">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal com detalhes-->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="closeModal()">X</button>
+      <div *ngIf="selectedAto">
+        <h3>Detalhes do Evento: {{ selectedAto.Nome }}</h3>
+        <p><strong>Estado:</strong> {{ selectedAto.Estado }} <strong>Cidade:</strong> {{ selectedAto.Cidade }}</p>
+        <p><strong>Local:</strong> {{ selectedAto.Local }} <strong>Horário:</strong> {{ selectedAto.Horario }} <strong>Data:</strong> {{ selectedAto.Data }}</p>
+        <p><strong>Categoria:</strong> {{ selectedAto.Categoria }}</p>
+        <p><strong>Descrição:</strong> {{ selectedAto.Descricao }}</p>
+        <p><strong>Organização:</strong> {{ selectedAto.Org }}</p> 
+        <p><a href="{{ selectedAto.Contato }}" class="btn btn-primary" target="_blank">Faça parte da Organização do Ato</a></p> 
+      </div>
     </div>
   </div>
 </div>
