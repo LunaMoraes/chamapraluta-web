@@ -1,7 +1,7 @@
 <div class="calendario-container">
     <h2>Calendário de Atos</h2>
     <a class="btn btn-secondary bar" href="https://forms.gle/jPYq32witgHJUgvZ8" target="_blank">Cadastrar Manifestação</a>
-    <a class="btn btn-secondary bar" href="https://forms.gle/Ee5bYQY1vCH4pYJF6" target="_blank">Requerir Acesso</a>
+    <a *ngIf="isLoggedIn" class="btn btn-secondary bar" href="https://forms.gle/Ee5bYQY1vCH4pYJF6" target="_blank">Minhas manifestações</a>
 
     <!-- Tabela com os dados da planilha -->
     <div class="table-container">

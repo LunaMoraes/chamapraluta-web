@@ -9,6 +9,14 @@ body {
     background-color: transparent;
 }
 
+.lowerOptions{
+    background-color: transparent;
+    color: #ad4e00;
+    text-decoration: underline;
+    font-weight: 100;
+    
+}
+
 .login-container {
     background-color: white;
     padding: 40px;
@@ -54,9 +62,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #964300;
-}
+
 
 .options {
     margin-top: 15px;
@@ -71,4 +77,5 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: #964300;
 }

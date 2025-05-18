@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'; // Added OnInit
 import { CommonModule } from '@angular/common';
-// import * as XLSX from 'xlsx'; // Removed unused import
-import { HttpClient } from '@angular/common/http';
 import { CalendarioService } from '../calendario.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-calendario',
@@ -15,10 +14,12 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   planilhaDados: any[] = [];
   selectedAto: any = null; // To store the selected event for the modal
   showModal: boolean = false; // To control modal visibility
+  isLoggedIn = false;
 
-  constructor(private http: HttpClient, private calendarioService: CalendarioService) {}
+  constructor(private calendarioService: CalendarioService, private authService: AuthenticationService) {}
 
   ngOnInit(): void { // Added ngOnInit
+    this.isLoggedIn = this.authService.isLoggedIn;
     this.carregarDados();
   }
 
