@@ -23,7 +23,7 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
 
   private carregarDados() {
     // Replace with your Google Spreadsheet CSV export URL
-    const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR33FIEH_t7Tzg7IKkT_ig0pBqVYsJzkplMuZRnP1Zkkx2wshRlhnHhcdwyqo1Zv2ADYrgs8Sz22io2/pub?output=csv'; 
+    const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR33FIEH_t7Tzg7IKkT_ig0pBqVYsJzkplMuZRnP1Zkkx2wshRlhnHhcdwyqo1Zv2ADYrgs8Sz22io2/pub?gid=0&single=true&output=csv'; 
     this.http.get(spreadsheetUrl, { responseType: 'text' })
       .subscribe(
         data => this.processarCSV(data),
@@ -32,6 +32,7 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   }
 
   private processarCSV(csvData: string) {
+    console.log('Raw CSV Data:', csvData); // Log the raw CSV data for debugging
     const lines = csvData.split('\n');
     const headers = lines[0].split(',').map(h => h.trim());
 
