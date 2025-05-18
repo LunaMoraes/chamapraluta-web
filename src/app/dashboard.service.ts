@@ -17,7 +17,7 @@ export class DashboardService {
   }
   carregarDetalhesPauta(pautaId: number) {
     // Mock data for demonstration purposes
-    const detalhes = [{ 
+    const detalhes = { 
       id: 1, 
       title: 'Pauta 1', 
       details: 'Detalhes da Pauta 1',
@@ -25,7 +25,7 @@ export class DashboardService {
         { id: 1, name: 'Manifestação 1', description: 'Descrição da Manifestação 1' },
         { id: 2, name: 'Manifestação 2', description: 'Descrição da Manifestação 2' }
       ]
-    }];
+    };
 
     return detalhes;
   }

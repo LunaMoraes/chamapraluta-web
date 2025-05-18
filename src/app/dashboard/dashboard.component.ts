@@ -1,7 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { NgIf, NgFor } from '@angular/common';
-import { Modal } from 'bootstrap'; // Import Modal
 
 @Component({
   selector: 'app-dashboard',
@@ -11,22 +10,14 @@ import { Modal } from 'bootstrap'; // Import Modal
   styleUrl: './dashboard.component.css'
 })
 
-export class DashboardComponent implements OnInit, AfterViewInit { // Implement AfterViewInit
-  @ViewChild('pautaModal') pautaModalElement: ElementRef | undefined;
-  bootstrapModal: Modal | undefined;
-
+export class DashboardComponent {
   constructor(private dashboardService: DashboardService) {}
   pautaList: any[] = [];
-  detailsPauta: any = {};
+  detailsPauta: any = [];
+  showModal: boolean = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void { // Added ngOnInit
     this.carregarPautas();
-  }
-
-  ngAfterViewInit() { // Use ngAfterViewInit to ensure the modal element is available
-    if (this.pautaModalElement) {
-      this.bootstrapModal = new Modal(this.pautaModalElement.nativeElement);
-    }
   }
 
   private carregarPautas() {
@@ -34,19 +25,19 @@ export class DashboardComponent implements OnInit, AfterViewInit { // Implement 
     console.log(this.pautaList); // Log the loaded data for debugging
   }
 
-  openModal(pautaId: any) { //
-    console.log('Opening modal for Pauta ID:', pautaId); // Log the Pauta ID for debugging
-    this.detailsPauta = pautaId;
-    if (this.bootstrapModal) {
-      this.bootstrapModal.show();
-    }
+  private carregarDetalhesPauta(pautaId: number) {
+    this.detailsPauta = this.dashboardService.carregarDetalhesPauta(pautaId);
+    console.log(this.detailsPauta);
+  }
+
+  openModal(pautaId: number) {
+    this.carregarDetalhesPauta(pautaId);
+    this.showModal = true;
   }
 
   // Function to close the modal
   closeModal() {
-    if (this.bootstrapModal) {
-      this.bootstrapModal.hide();
-    }
-    this.detailsPauta = null; 
+    this.showModal = false;
+    this.detailsPauta = null;
   }
 }

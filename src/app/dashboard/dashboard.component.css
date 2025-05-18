@@ -57,3 +57,29 @@
     from { transform: translateY(-100%); }
     to { transform: translateY(0%); }
 }
+.pauta-card {
+  background-color: rgba(85, 0, 0, 1); /* Fixed alpha value to proper 0-1 scale */
+  color: #f8f9fa;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+.pauta-card:hover {
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.card-text {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
