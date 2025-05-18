@@ -1,21 +1,32 @@
 <body>
-    <!-- Latest Event Widget -->
-    <div class="event-widget">
-        <div class="event-content">
-            <div class="event-status-dot"></div>
-            <div class="event-text">
-                <div class="event-date">Latest Event: September 15, 2023</div>
-                <div class="event-title">Annual Charity Gala Night</div>
-            </div>
-        </div>
-        <button class="close-btn" onclick="this.parentElement.style.display='none'">
-            ×
-        </button>
+  <div *ngFor="let item of pautaList" class="card mb-3 shadow-sm rounded">
+    <div class="card-body">
+      <h5 class="card-title text-primary">{{item.title}}</h5>
+      <p class="card-text text-muted">{{item.description}}</p>
+      <button type="button" class="btn btn-primary" (click)="openModal(item.id)">
+        Ver Detalhes
+      </button>
     </div>
+  </div>
 
-    <!-- Rest of your page content -->
-    <div style="margin-top: 60px; padding: 20px;">
-        <h1>Website Content</h1>
-        <p>This is the main content of your webpage...</p>
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="pautaModal" tabindex="-1" aria-labelledby="pautaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pautaModalLabel">Detalhes da Pauta: {{ detailsPauta?.Nome }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body" *ngIf="detailsPauta">
+          <!-- Display pauta details here -->
+          <p><strong>Título:</strong> {{ detailsPauta.title }}</p>
+          <p><strong>Descrição:</strong> {{ detailsPauta.description }}</p>
+          <!-- Add more details as needed -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Fechar</button>
+        </div>
+      </div>
     </div>
+  </div>
 </body>

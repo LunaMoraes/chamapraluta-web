@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'; // Added OnInit
 import { CommonModule } from '@angular/common';
 // import * as XLSX from 'xlsx'; // Removed unused import
 import { HttpClient } from '@angular/common/http';
+import { CalendarioService } from '../calendario.service';
 
 @Component({
   selector: 'app-calendario',
@@ -15,50 +16,16 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   selectedAto: any = null; // To store the selected event for the modal
   showModal: boolean = false; // To control modal visibility
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private calendarioService: CalendarioService) {}
 
   ngOnInit(): void { // Added ngOnInit
     this.carregarDados();
   }
 
   private carregarDados() {
-    // Replace with your Google Spreadsheet CSV export URL
-    const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR33FIEH_t7Tzg7IKkT_ig0pBqVYsJzkplMuZRnP1Zkkx2wshRlhnHhcdwyqo1Zv2ADYrgs8Sz22io2/pub?gid=0&single=true&output=csv'; 
-    this.http.get(spreadsheetUrl, { responseType: 'text' })
-      .subscribe(
-        data => this.processarCSV(data),
-        error => console.error('Erro ao carregar a planilha:', error)
-      );
-  }
-
-  private processarCSV(csvData: string) {
-    console.log('Raw CSV Data:', csvData); // Log the raw CSV data for debugging
-    const lines = csvData.split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
-
-    this.planilhaDados = lines.slice(1)
-      .filter(line => line.trim() !== '') // Filter out any empty lines
-      .map(line => {
-        const values = line.split(',');
-        return headers.reduce((obj, header, index) => {
-          const rawValue = values[index];
-          let processedValue: any = rawValue ? rawValue.trim() : '';
-
-          // Converter string 'true'/'false' para boolean for 'importante' column
-          if (header === 'importante') {
-            processedValue = processedValue.toLowerCase() === 'true';
-          }
-          // Add other specific type conversions here if needed for other columns
-          // else if (header === 'someNumberColumn') {
-          //   processedValue = parseFloat(processedValue);
-          // }
-
-          obj[header] = processedValue;
-          return obj;
-        }, {} as any);
-      });
-
-      console.log('Processed Data:', this.planilhaDados); // Log the processed data for debugging
+    this.calendarioService.carregarDados().subscribe(dados => {
+      this.planilhaDados = dados;
+    });
   }
 
   // Function to open the modal and set the selected event
