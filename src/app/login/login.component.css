@@ -100,3 +100,19 @@ a:hover {
     margin-bottom: 5px;
     font-weight: bold;
   }
+
+.custom-dropdown {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  min-width: 250px;
+  margin: 8px 0;
+  background-color: white;
+}
+
+.custom-dropdown:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
+}

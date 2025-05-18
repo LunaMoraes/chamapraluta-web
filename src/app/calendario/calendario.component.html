@@ -2,17 +2,18 @@
   <h2>Calendário de Atos</h2>
   <!--Nav Buttons-->
   <div *ngIf="isLoggedIn">
-    <button class="btn btn-secondary bar" (click)="changeView('cadastro')">Cadastrar Manifestaçao</button>
-    <button class="btn btn-secondary bar" (click)="changeView('minhaTabela')">Minhas Manifestações</button>
+    <button *ngIf="view!='cadastro'" class="btn btn-secondary bar" (click)="changeView('cadastro')">Cadastrar Manifestaçao</button>
+    <button *ngIf="view!='minhaTabela'" class="btn btn-secondary bar" (click)="changeView('minhaTabela')">Minhas Manifestações</button>
+    <button *ngIf="view!='table'" class="btn btn-secondary bar" (click)="changeView('table')">Tabela Geral</button>
   </div>
-  
+
   <!--loading spinner-->
   <div *ngIf="loadingData==true" class="spinner-container">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-
+  
   <!-- Tabela com os dados da planilha -->
   <div *ngIf="loadingData==false && view=='table'" class="table-container">
     <table class="eventos-table">
@@ -46,6 +47,79 @@
     </table>
   </div>
 
+  <!-- Tabela com os manifestações próprias -->
+  <div *ngIf="loadingData==false && view=='minhaTabela'" class="table-container">
+    <table class="eventos-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Estado</th>
+          <th>Cidade</th>
+          <th>Local</th>
+          <th>Data</th>
+          <th>Horario</th>
+          <th>Categoria</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ato of planilhaPropria">
+          <td>{{ ato.Nome }}</td>
+          <td>{{ ato.Estado }}</td>
+          <td>{{ ato.Cidade }}</td>
+          <td>{{ ato.Local }}</td>
+          <td>{{ ato.Data }}</td>
+          <td>{{ ato.Horario }}</td>
+          <td>{{ ato.Categoria }}</td> 
+          <td> 
+            <button class="btn btn-dark" (click)="openModal(ato)">Info Extra</button>
+            <button *ngIf="ato.status!='finalizado'" class="btn btn-dark" (click)="openModal(ato)">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Cadastrar manifestação-->
+   <div *ngIf="loadingData==false && view=='cadastro'" class="table-container">
+    <h3>Cadastro de Manifestações</h3>
+    <form (ngSubmit)="submitForm()" #eventForm="ngForm">
+      <div class="form-group">
+        <label for="nome">Nome do Evento</label>
+        <input type="text" id="nome" name="nome" [(ngModel)]="newAto.Nome" required>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" [(ngModel)]="newAto.Estado" required>
+      </div>
+      <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" [(ngModel)]="newAto.Cidade" required>
+      </div>
+      <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" [(ngModel)]="newAto.Local" required>
+      </div>
+      <div class="form-group">
+        <label for="data">Data e hora</label>
+        <input type="datetime-local" id="data" name="data" [(ngModel)]="newAto.Data" required>
+      </div>
+      <div class="form-group">
+        <label for="categoria">Categoria</label>
+        <input type="text" id="categoria" name="categoria" [(ngModel)]="newAto.Categoria" required>
+      </div>
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" [(ngModel)]="newAto.Descricao" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="org">Organização</label>
+        <input type="text" id="org" name="org" [(ngModel)]="newAto.Org" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
   <!-- Modal com detalhes-->
   <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
@@ -61,4 +135,6 @@
       </div>
     </div>
   </div>
+
+
 </div>

@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core'; // Added OnInit
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Added FormsModule and ReactiveFormsModule
 import { CalendarioService } from '../calendario.service';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-calendario',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule], // Added FormsModule and ReactiveFormsModule
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.css']
 })
-export class CalendarioComponent implements OnInit { // Implemented OnInit
+export class CalendarioComponent implements OnInit { 
+  newAto: any = {}
   planilhaDados: any[] = [];
+  planilhaPropria: any[] = [];
   selectedAto: any = null; // To store the selected event for the modal
   showModal: boolean = false; // To control modal visibility
   isLoggedIn = false;
@@ -26,14 +29,18 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
     this.isLoggedIn = this.authService.isLoggedIn;
     this.userID = this.authService.getUserId();
     this.userPerms = this.authService.getUserPerms();
-    this.carregarDados();
+    this.carregarTabelaGeral();
   }
 
-  private carregarDados() {
-    this.calendarioService.carregarDados().subscribe(dados => {
+  private carregarTabelaGeral() {
+    this.calendarioService.carregarDadosGerais().subscribe(dados => {
       this.planilhaDados = dados;
       this.loadingData = false;
     });
+  }
+  private carregarTabelaPropria() {
+    this.planilhaPropria = this.calendarioService.carregarDadosProprios(this.userID)
+    this.loadingData = false;
   }
 
   // Function to open the modal and set the selected event
@@ -49,6 +56,19 @@ export class CalendarioComponent implements OnInit { // Implemented OnInit
   }
 
   changeView(view: string) {
+    this.loadingData = true;
     this.view = view;
+    
+    if (view === 'table') {
+      this.carregarTabelaGeral();
+    } else if (view === 'minhaTabela') {
+      this.carregarTabelaPropria();
+    } else if(view === 'cadastro'){
+      this.loadingData = false;
+    }
+  }
+  submitForm(){
+    // Handle form submission logic here
+    console.log('Form submitted');
   }
 }

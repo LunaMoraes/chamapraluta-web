@@ -46,21 +46,15 @@
                 <div *ngIf="isOrganizerSelected == 1">
                     <label for="tel" class="form-group">Telefone de Contato</label>
                     <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
-
-                    <label for="organizacoes">Selecione uma organização:</label>
-<select id="organizacoes" name="organizacao" required>
-  <option value="" disabled selected>Selecione uma opção</option>
-  <option value="PSOL">PSOL</option>
-  <option value="PT">PT</option>
-  <option value="Antiordem">Antiordem</option>
-  <option value="Chama">Chama</option>
-  <option value="ANTRA">ANTRA</option>
-  <option value="IBRAT">IBRAT</option>
-  <option value="Mães pela Diversidade">Mães pela Diversidade</option>
-  <option value="Outro" (select)="selectOther()">Outro</option>
-  <option value="Independente">Independente</option>
+                <label for="organizacoes">Selecione uma organização:</label>
+<select [(ngModel)]="selectedOption" class="custom-dropdown">
+  <option value="" disabled>Selecione uma opção</option>
+  <option *ngFor="let opt of options" [value]="opt">
+    {{ opt }}
+  </option>
 </select>
-<div id="outros-container" style="display: none;">
+
+<div id="outros-container" style="display: none;" *ngIf="otherselected == 1">
   <label for="outros">Especifique:</label>
   <input type="text" id="outros" name="outros_organizacao">
 </div>
