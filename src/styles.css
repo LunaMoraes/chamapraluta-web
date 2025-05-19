@@ -62,8 +62,17 @@ html, body {
   border: none;
 }
 
+.separator{
+  margin: 20px;
+}
 
+.component-container {
+    background-color: #161111;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+}
 
 .main-content-area {
   padding: 30px;

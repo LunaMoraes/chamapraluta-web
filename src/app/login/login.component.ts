@@ -3,6 +3,7 @@ import { AuthenticationService } from '../authentication.service';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+let tokenClient: any;
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -16,6 +17,7 @@ selectedOrganization: any;
   constructor(private authService: AuthenticationService) { }
   isLogin = 0;
   selectedOption: string = '';
+  
   options: string[] = [
     'Psol',
     'PT',
@@ -56,6 +58,14 @@ selectedOrganization: any;
   onSelectionChange() {
     console.log('Selected option:', this.selectedOption);
     // Add your custom logic here
+  }
+
+  signInAndAuthorize(): void {
+    if (!tokenClient) {
+      console.error('Token client not initialized.');
+      return;
+    }
+    tokenClient.requestAccessToken({ prompt: 'consent' });
   }
 
 }

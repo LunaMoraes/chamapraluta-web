@@ -1,6 +1,6 @@
 
 <body>
-    <div *ngIf="isLogin==0" class="login-container">
+    <div *ngIf="isLogin==0" class="component-container proportions-cadastro">
         <h2 class="banner-title">Login</h2>
         <form action="#" method="post">
             <div class="form-group">
@@ -11,16 +11,37 @@
                 <label for="password">Senha</label>
                 <input type="password" id="password" name="password" required>
             </div>
+                <div>
+                    <button class="esqueceu-senha" >Esqueceu sua Senha?</button>
+                </div>
+            <div class="separator"></div>
+
             <button type="submit">Entrar</button>
         </form>
+        
         <div class="options">
-            <button class="lowerOptions" (click)="changeLogin('register')">Cadastrar</button>
+            <p>Ainda não tem uma conta? </p>
+            <button class="lowerOptions" (click)="changeLogin('register')">Cadastre-se</button>
         </div>
-        <div class="options">
-            <button class="lowerOptions" >Esqueceu sua Senha?</button>
-        </div>
+
+        <hr>
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?
+        client_id=YOUR_CLIENT_ID&
+        redirect_uri=YOUR_REDIRECT_URI&
+        response_type=code&
+        scope=email profile&
+        access_type=offline&
+        prompt=select_account" 
+        class="google-btn">
+        
+        <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" 
+             alt="Google logo" 
+             class="google-icon">
+        Continuar com o Google
+    </a>
+
     </div>
-    <div *ngIf="isLogin==1" class="login-container">
+    <div *ngIf="isLogin==1" class="component-container proportions-cadastro">
         <h2 class="banner-title">Cadastro</h2>
         <form action="#" method="post">
             <div class="form-group">
@@ -75,8 +96,7 @@
         <div class="options">
             <button class="lowerOptions" (click)="changeLogin('login')">Ja tem uma conta? Acesse!</button>
         </div>
-        <div class="options">
-            <button class="lowerOptions" >Esqueceu sua Senha?</button>
-        </div>
+
     </div>
+    <script src="https://accounts.google.com/gsi/client"></script>
 </body>

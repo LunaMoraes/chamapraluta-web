@@ -17,16 +17,27 @@ body {
     
 }
 
-.login-container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.proportions-cadastro{
+    font-family: 'Segoe UI', Arial, sans-serif;
     width: 50%;
+    max-width: 1000px;
+
+    padding: 25px;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+/* For Tablets */
+@media (max-width: 768px) {
+    .proportions-cadastro {
+      padding: 20px;
+      margin: 15px;
+    }
 }
 
 h2 {
-    text-align: center;
     color: #ad4e00;
     margin-bottom: 30px;
 }
@@ -38,7 +49,7 @@ h2 {
 label {
     display: block;
     margin-bottom: 5px;
-    color: #606770;
+    color: #b4b9c0;
 }
 
 input[type="text"],
@@ -72,6 +83,17 @@ button {
     margin-top: 15px;
     text-align: center;
 }
+
+.esqueceu-senha{
+    margin-top: 1px;
+    text-align: right;
+    background-color: transparent;
+    color: #ad4e00;
+    text-decoration: underline;
+    font-weight: 100;
+}
+
+
 
 a {
     color: #964300;
@@ -116,3 +138,26 @@ a:hover {
   border-color: #2196F3;
   box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
 }
+
+        .google-btn {
+            background-color: #4285f4;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.3s;
+        }
+
+        .google-btn:hover {
+            background-color: #ad4e00;
+          }
+
+        .google-icon {
+            width: 20px;
+            height: 20px;
+        }
