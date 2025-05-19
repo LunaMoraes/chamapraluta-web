@@ -11,7 +11,7 @@ import { loadFirePreset } from "@tsparticles/preset-fire";
   standalone: true,
   imports: [RouterOutlet, NgIf, NgxParticlesModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css', '../styles.css'],
 })
 export class AppComponent {
   title = 'chamapraluta';
