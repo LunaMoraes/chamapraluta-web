@@ -2,9 +2,10 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 @font-face {
-    font-family: archerhero;
-    src: url("/assets/fontes/heroarcherfreeversionregular-6yjnd.ttf"); 
- 
+    font-family: 'archerhero';
+    src: url('/assets/fontes/Heroarcherfreeversion-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body {
@@ -33,9 +34,9 @@ html, body {
   width: 100%;
 }
 .banner-title {
-  font-family: archerhero;
+  font-family: 'archerhero', sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 28px;
   line-height: 46px;
 }
