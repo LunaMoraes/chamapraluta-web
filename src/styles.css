@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import "assets/fontes/heroarcherfreeversionregular-6yjnd.ttf";
 
 @font-face {
-    font-family: archer-hero;
+    font-family: archerhero;
     src: url("/assets/fontes/heroarcherfreeversionregular-6yjnd.ttf"); 
-    format: "opentype";
+ 
 }
 
 html, body {
@@ -18,6 +17,7 @@ html, body {
 
 /*Banner*/
 .app-banner {
+
   color: white;
   padding: 2%;
   background-color: #292524;
@@ -32,10 +32,10 @@ html, body {
   height: 78px;
   width: 100%;
 }
-.bannerTitle {
-  font-family: archer-hero;
+.banner-title {
+  font-family: archerhero;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 28px;
   line-height: 46px;
 }
