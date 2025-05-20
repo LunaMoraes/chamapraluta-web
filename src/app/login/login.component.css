@@ -50,6 +50,14 @@ body {
   }
 }
 
+/* Make container full-width on small screens */
+@media (max-width: 768px) {
+  .proportions-cadastro {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 h2 {
   color: #ad4e00;
   margin-bottom: 30px;

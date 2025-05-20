@@ -109,6 +109,13 @@ input {
   z-index: 1; /* Keep content above particles */
 }
 
+/* Adjust main-content-area margin on mobile */
+@media (max-width: 768px) {
+  .main-content-area {
+    margin: 1%;
+  }
+}
+
 .generalText{
   font-family: "Inter";
 }
