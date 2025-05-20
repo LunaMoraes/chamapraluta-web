@@ -51,4 +51,18 @@ export class CalendarioService {
 
     return dados;
   }
+
+  retrieveOrgs() {
+    return [
+      'Psol',
+      'PT',
+      'Antiordem',
+      'Chama',
+      'Antra',
+      'IBRAT',
+      'Mães pela diversidade',
+      'Outro',
+      'Independente'
+    ];
+  }
 }

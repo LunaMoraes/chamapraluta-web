@@ -40,16 +40,20 @@
     </div>
 
     <div *ngIf="isLogin==1">
-      <h2 class="banner-title">Cadastro</h2>
+      <h2 class="title">CRIAR NOVA CONTA</h2>
       <form action="#" method="post">
         <p class="subtitle">Dados básicos</p>
         <div class="form-group">
-          <label for="nome">Nome</label>
+          <label for="nome" placeholder="Nome social">Nome</label>
           <input type="text" id="nome" name="nome" required>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" id="email" name="email" required>
+          <input type="text" id="email" name="email" required placeholder="exemplo@email.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
           <p for="radio" class="subtitle">Pretende chamar manifestações?</p>
@@ -66,19 +70,15 @@
             <label for="tel" class="form-group">Telefone de Contato</label>
             <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
             <label for="organizacoes">Selecione uma organização:</label>
-            <select [(ngModel)]="selectedOption" class="custom-dropdown">
+            <select [(ngModel)]="selectedOption" class="">
               <option value="" disabled>Selecione uma opção</option>
-              <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+              <option *ngFor="let opt of orgsOptions" [value]="opt">{{ opt }}</option>
             </select>
             <div id="outros-container" style="display: none;" *ngIf="otherselected == 1">
               <label for="outros">Especifique:</label>
               <input type="text" id="outros" name="outros_organizacao">
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required>
         </div>
 
         <button *ngIf="!loading" type="submit" (click)="startCadastro()">Cadastrar</button>

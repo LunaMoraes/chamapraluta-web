@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CalendarioService } from '../calendario.service';
 
 @Component({
   selector: 'app-login',
@@ -24,21 +25,11 @@ export class LoginComponent implements OnInit {
   phone: string = '';
   outros: string = '';
   selectedOrganization: any;
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private calendarioService: CalendarioService) { }
   isLogin = 0;
   selectedOption: string = '';
-  
-  options: string[] = [
-    'Psol',
-    'PT',
-    'Antiordem',
-    'chama',
-    'Antra',
-    'IBRAT',
-    'mães pela diversidade',
-    'outro',
-    'independente'
-  ];
+
+  orgsOptions: string[] = [];
 
   changeLogin(type: string){
     if (type === 'login') {
@@ -61,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     this.authService.initGoogleAuth();
+    this.orgsOptions = this.calendarioService.retrieveOrgs();
   }
   
 
