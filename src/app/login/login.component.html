@@ -55,11 +55,11 @@
           <p for="radio" class="subtitle">Pretende chamar manifestações?</p>
           <div class="radio-group">
             <label>
-              <input type="radio" name="choice" value="1" (click)="selectOrganizer(1)"> Sim
+              <input class="radio-input" type="radio" name="choice" value="1" (click)="selectOrganizer(1)"> Sim
             </label>
             <br>
             <label>
-              <input type="radio" name="choice" value="0" (click)="selectOrganizer(0)"> Não
+              <input class="radio-input" type="radio" name="choice" value="0" (click)="selectOrganizer(0)"> Não
             </label>
           </div>
           <div *ngIf="isOrganizerSelected == 1">

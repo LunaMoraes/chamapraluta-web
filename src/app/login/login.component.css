@@ -89,11 +89,13 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-
+.radio-input {
+  background-color: #F54900;
+}
 
 .radio-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
 }
 .options {
