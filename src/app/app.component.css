@@ -43,6 +43,9 @@
   display: flex;
 }
 
+/* Center banner title when menu is open */
+
+
 /* Responsive: collapse into dropdown */
 @media (max-width: 600px) {
   .menu-toggle {
@@ -67,6 +70,9 @@
     padding: 0.75rem 1rem;
     border: none;
     background: none;
+  }
+  .banner-top {
+    margin-left: 7%;
   }
 }
 
