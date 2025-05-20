@@ -70,11 +70,11 @@
             <label for="tel" class="form-group">Telefone de Contato</label>
             <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
             <label for="organizacoes">Selecione uma organização:</label>
-            <select [(ngModel)]="selectedOption" class="">
+            <select [(ngModel)]="selectedOption" name="selectedOption" class="custom-dropdown" (change)="onSelectionChange()">
               <option value="" disabled>Selecione uma opção</option>
               <option *ngFor="let opt of orgsOptions" [value]="opt">{{ opt }}</option>
             </select>
-            <div id="outros-container" style="display: none;" *ngIf="otherselected == 1">
+            <div id="outros-container" *ngIf="isOtherSelected == 1">
               <label for="outros">Especifique:</label>
               <input type="text" id="outros" name="outros_organizacao">
             </div>

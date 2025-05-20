@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { NgIf } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarioService } from '../calendario.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgIf, FormsModule],
+  imports: [NgIf, NgFor, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
   phone: string = '';
   outros: string = '';
   selectedOrganization: any;
+  isOrganizerSelected: number = 0;
+  isOtherSelected: number = 0;
   constructor(private authService: AuthenticationService, private calendarioService: CalendarioService) { }
   isLogin = 0;
   selectedOption: string = '';
@@ -40,27 +42,18 @@ export class LoginComponent implements OnInit {
       this.isLogin = 2;
     }
   }
-  isOrganizerSelected = 0;
   selectOrganizer(organizer: number){
     this.isOrganizerSelected = organizer
   }
-  otherselected = 0
-
-
-  selectOther(){
-
+  onSelectionChange() {
+    this.isOtherSelected = this.selectedOption === 'Outro' ? 1 : 0;
   }
+
   ngOnInit(): void {
     this.authService.initGoogleAuth();
     this.orgsOptions = this.calendarioService.retrieveOrgs();
   }
-  
 
-  // Add any additional logic you need here
-  onSelectionChange() {
-    console.log('Selected option:', this.selectedOption);
-    // Add your custom logic here
-  }
 
   signInAndAuthorize(): void {
     this.loading = true;
@@ -97,13 +90,16 @@ export class LoginComponent implements OnInit {
     }
   }
   async startCadastro() {
+    if (this.isOtherSelected) {
+      this.selectedOption = this.outros;
+    }
     let data = {
       nome: this.nome,
       email: this.registerEmail,
+      password: this.password,
       isOrganizer: this.isOrganizerSelected,
       phone: this.phone,
       organization: this.selectedOption,
-      otherOrganization: this.outros
     };
     this.loading = true;
     this.error = false;
