@@ -1,15 +1,18 @@
 <ngx-particles [id]="id"></ngx-particles>
 <header class="app-banner">
-  <h1 class="banner-title">CHAMA PRA LUTA</h1>
-  <nav class="app-nav">
+  <div class="banner-top">
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+    <h1 class="banner-title">CHAMA PRA LUTA</h1>
+    
+  </div>
+  <nav class="app-nav" [class.open]="isMenuOpen">
     <button class="nav-button" (click)="navigateToDashboard()">Home</button>
-    <ng-container *ngIf="isLoggedIn"> 
+    <ng-container *ngIf="isLoggedIn">
       <button class="nav-button">Perfil</button>
     </ng-container>
-    <ng-container *ngIf="isLoggedIn==false"> 
-      <button class="nav-button" (click)="navigateToLogin()">Login</button> 
+    <ng-container *ngIf="!isLoggedIn">
+      <button class="nav-button" (click)="navigateToLogin()">Login</button>
     </ng-container>
-    <button class="nav-button">Baixe o App</button>
     <button class="nav-button" (click)="navigateToCalendario()">Calendário de Atos</button>
   </nav>
 </header>
