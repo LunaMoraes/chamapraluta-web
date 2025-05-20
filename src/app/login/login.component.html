@@ -25,20 +25,13 @@
         </div>
 
         <hr>
-    <a href="https://accounts.google.com/o/oauth2/v2/auth?
-        client_id=YOUR_CLIENT_ID&
-        redirect_uri=YOUR_REDIRECT_URI&
-        response_type=code&
-        scope=email profile&
-        access_type=offline&
-        prompt=select_account" 
-        class="google-btn">
-        
-        <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" 
-             alt="Google logo" 
-             class="google-icon">
-        Continuar com o Google
-    </a>
+
+    <div class="">
+        <button class="google-btn" (click)="signInAndAuthorize()">
+            <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" alt="Google logo">
+            <span>Entrar com Google</span>
+        </button>
+    </div>
 
     </div>
     <div *ngIf="isLogin==1" class="component-container proportions-cadastro">
@@ -98,5 +91,4 @@
         </div>
 
     </div>
-    <script src="https://accounts.google.com/gsi/client"></script>
-</body>
+  </body>

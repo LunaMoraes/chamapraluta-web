@@ -140,7 +140,7 @@ a:hover {
 }
 
         .google-btn {
-            background-color: #4285f4;
+            background-color: transparent;
             color: white;
             padding: 12px 24px;
             border: none;
@@ -154,7 +154,7 @@ a:hover {
         }
 
         .google-btn:hover {
-            background-color: #ad4e00;
+            background-color: #524a4354;
           }
 
         .google-icon {
