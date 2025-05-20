@@ -2,11 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environment/environment';
-
-declare const google: any;
-let tokenClient: any;
 
 @Component({
   selector: 'app-login',
@@ -18,7 +13,7 @@ let tokenClient: any;
 
 export class LoginComponent implements OnInit {
 selectedOrganization: any;
-  constructor(private authService: AuthenticationService, private http: HttpClient) { }
+  constructor(private authService: AuthenticationService) { }
   isLogin = 0;
   selectedOption: string = '';
   
@@ -54,23 +49,7 @@ selectedOrganization: any;
 
   }
   ngOnInit(): void {
-    // Initialize any necessary data or services here
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: environment.googleClientId,
-      scope: 'email profile openid',
-      callback: (tokenResponse: any) => {
-        if (tokenResponse.error) {
-          console.error(tokenResponse.error);
-          return;
-        }
-        console.log('Google token: ', tokenResponse.access_token);
-        // Optionally send token to backend
-        this.authService.authenticateWithGoogle(tokenResponse.access_token).subscribe(
-          (res: any) => console.log('Backend auth response:', res),
-          (err: any) => console.error('Backend auth error:', err)
-        );
-      },
-    });
+    this.authService.initGoogleAuth();
   }
   
 
@@ -81,11 +60,7 @@ selectedOrganization: any;
   }
 
   signInAndAuthorize(): void {
-    if (!tokenClient) {
-      console.error('Token client not initialized.');
-      return;
-    }
-    tokenClient.requestAccessToken({ prompt: 'consent' });
+    this.authService.requestGoogleAccessToken();
   }
 
 }
