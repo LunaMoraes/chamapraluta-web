@@ -1,18 +1,16 @@
 <body>
   <div class="component-container proportions-cadastro">
     <div *ngIf="isLogin==0">
-      <h2 class="banner-title">Login</h2>
+      <h2 class="title">LOGIN COM EMAIL</h2>
       <form action="#" method="post">
         <div class="form-group">
           <label for="username">Email</label>
-          <input type="text" id="username" name="username" required>
+          <input type="text" id="username" name="username" required placeholder="exemplo@email.com">
         </div>
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <div>
-          <button class="esqueceu-senha">Esqueceu sua Senha?</button>
+          <input type="password" id="password" name="password" required placeholder="🔒">
+          <button class="esqueceu-senha">Esqueci minha senha</button>
         </div>
         <div class="separator"></div>
 
@@ -28,8 +26,7 @@
       </form>
 
       <div class="options">
-        <p>Ainda não tem uma conta? </p>
-        <button class="lowerOptions" (click)="changeLogin('register')">Cadastre-se</button>
+        <p>Não possui uma conta? <a (click)="changeLogin('register')">Cadastre-se</a></p>
       </div>
 
       <hr>
@@ -37,7 +34,7 @@
       <div>
         <button class="google-btn" (click)="signInAndAuthorize()">
           <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" alt="Google logo">
-          <span>Entrar com Google</span>
+          <span>Continuar com Google</span>
         </button>
       </div>
     </div>
@@ -45,6 +42,7 @@
     <div *ngIf="isLogin==1">
       <h2 class="banner-title">Cadastro</h2>
       <form action="#" method="post">
+        <p class="subtitle">Dados básicos</p>
         <div class="form-group">
           <label for="nome">Nome</label>
           <input type="text" id="nome" name="nome" required>
@@ -54,14 +52,14 @@
           <input type="text" id="email" name="email" required>
         </div>
         <div class="form-group">
-          <label for="radio">Vai querer chamar manifestações?</label>
+          <p for="radio" class="subtitle">Pretende chamar manifestações?</p>
           <div class="radio-group">
             <label>
-              <input type="radio" name="choice" value="1" (click)="selectOrginzer(1)"> Sim
+              <input type="radio" name="choice" value="1" (click)="selectOrganizer(1)"> Sim
             </label>
             <br>
             <label>
-              <input type="radio" name="choice" value="0" (click)="selectOrginzer(0)"> Não
+              <input type="radio" name="choice" value="0" (click)="selectOrganizer(0)"> Não
             </label>
           </div>
           <div *ngIf="isOrganizerSelected == 1">

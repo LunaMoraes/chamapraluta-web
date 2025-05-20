@@ -1,78 +1,93 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    margin: 0;
-    background-color: transparent;
-    padding: 20px 0;
-    overflow-y: auto;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  background-color: transparent;
+  padding: 20px 0;
+  overflow-y: auto;
 }
 
+.title {
+  font-family: 'archerhero';
+  color: #F54900;
+}
+.subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FAFAF9;
+}
 .lowerOptions{
-    background-color: transparent;
-    color: #ad4e00;
-    text-decoration: underline;
-    font-weight: 100;
+  background-color: transparent;
+  color: #ad4e00;
+  text-decoration: underline;
+  font-weight: 100;
     
 }
 
 .proportions-cadastro{
-    font-family: 'Segoe UI', Arial, sans-serif;
-    width: 50%;
-    max-width: 1000px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  width: 50%;
+  max-width: 1000px;
 
-    padding: 25px;
+  padding: 25px;
 
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
 }
 
 /* For Tablets */
 @media (max-width: 768px) {
-    .proportions-cadastro {
-      padding: 20px;
-      margin: 15px;
-    }
+  .proportions-cadastro {
+    padding: 20px;
+    margin: 15px;
+  }
 }
 
 h2 {
-    color: #ad4e00;
-    margin-bottom: 30px;
+  color: #ad4e00;
+  margin-bottom: 30px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  font-family: "Inter";
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    color: #b4b9c0;
+  display: block;
+  margin-bottom: 5px;
+  color: #b4b9c0;
 }
 
 input[type="text"],
 input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dddfe2;
-    border-radius: 6px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1.5px solid #79716B;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #A6A09B;
+  background: #292524;
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    margin: 1%;
-    background-color: #ad4e00;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  margin: 1%;
+  background-color: #ad4e00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 
@@ -82,48 +97,56 @@ button {
   gap: 8px;
 }
 .options {
-    margin-top: 15px;
-    text-align: center;
+  color: #A6A09B;
+  font-family: "Inter";
+  margin-top: 15px;
+  text-align: center;
+}
+.options a {
+  color: #F5F5F4;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .esqueceu-senha{
-    margin-top: 1px;
-    text-align: right;
-    background-color: transparent;
-    color: #ad4e00;
-    text-decoration: underline;
-    font-weight: 100;
+  font-family: "Inter";
+  margin-top: 1px;
+  text-align: right;
+  background-color: transparent;
+  color: #F5F5F4;
+  text-decoration: none;
+  font-weight: 100;
 }
 
 
 
 a {
-    color: #964300;
-    text-decoration: none;
-    font-size: 14px;
+  color: #964300;
+  text-decoration: none;
+  font-size: 14px;
 }
 
 a:hover {
-    text-decoration: underline;
-    color: #964300;
+  text-decoration: underline;
+  color: #964300;
 }
 
 
-  select {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: 250px;
-    margin: 5px 0;
-  }
-  select:hover {
-    border-color: #999;
-  }
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 250px;
+  margin: 5px 0;
+}
+select:hover {
+  border-color: #999;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
 .custom-dropdown {
   padding: 8px 12px;
@@ -141,31 +164,35 @@ a:hover {
   box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
 }
 
-        .google-btn {
-            background-color: transparent;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: background-color 0.3s;
-            width: auto;
-            margin: 0 auto;
-        }
+.google-btn {
+  background-color: transparent;
+  color: #E7E5E4;
+  padding: 12px 24px;
+  font-weight: 600;
+  line-height: 155%;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: background-color 0.3s;
+  width: auto;
+  margin: 0 auto;
+  font-family: "Inter";
+}
 
-        .google-btn:hover {
-            background-color: #524a4354;
-          }
+.google-btn:hover {
+  background-color: #524a4354;
+}
 
-        .google-icon {
-            width: 20px;
-            height: 20px;
-        }
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
 
 /* Center the loading spinner and error alert */
 .spinner-container, .alert {

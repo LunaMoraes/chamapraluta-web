@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     }
   }
   isOrganizerSelected = 0;
-  selectOrginzer(organizer: number){
+  selectOrganizer(organizer: number){
     this.isOrganizerSelected = organizer
   }
   otherselected = 0
