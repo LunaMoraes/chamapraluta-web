@@ -12,7 +12,18 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class LoginComponent implements OnInit {
-selectedOrganization: any;
+  loading = false;
+  error= false;
+  errorMessage = '';
+  // Login form fields
+  username: string = '';
+  password: string = '';
+  // Registration form fields
+  nome: string = '';
+  registerEmail: string = '';
+  phone: string = '';
+  outros: string = '';
+  selectedOrganization: any;
   constructor(private authService: AuthenticationService) { }
   isLogin = 0;
   selectedOption: string = '';
@@ -60,7 +71,64 @@ selectedOrganization: any;
   }
 
   signInAndAuthorize(): void {
-    this.authService.requestGoogleAccessToken();
+    this.loading = true;
+    this.error = false;
+    try {
+      this.authService.requestGoogleAccessToken();
+    } catch (err) {
+      console.error('Google sign-in error:', err);
+      this.loading = false;
+      // TODO: show user-friendly error message
+    }
+  }
+
+  async startLogin() {
+    let data = {
+      username: this.username,
+      password: this.password
+    };
+    this.loading = true;
+    this.error = false;
+    try {
+      const result = await this.authService.loginUsuario(data);
+      if (result !== 200) {
+        this.loading = false;
+        console.error('Login failed with code:', result);
+        this.error = true;
+        this.errorMessage = 'Login failed. Please check your credentials.';
+      }
+    } catch (err) {
+      this.loading = false;
+      console.error('Login error:', err);
+      this.error = true;
+      this.errorMessage = 'Login failed. Please check your credentials.';
+    }
+  }
+  async startCadastro() {
+    let data = {
+      nome: this.nome,
+      email: this.registerEmail,
+      isOrganizer: this.isOrganizerSelected,
+      phone: this.phone,
+      organization: this.selectedOption,
+      otherOrganization: this.outros
+    };
+    this.loading = true;
+    this.error = false;
+    try {
+      const result = await this.authService.cadastrarUsuario(data);
+      if (result !== 200) {
+        this.loading = false;
+        console.error('Registration failed with code:', result);
+        this.error = true;
+        this.errorMessage = 'Registration failed. Please check your details.'; 
+      }
+    } catch (err) {
+      this.loading = false;
+      console.error('Registration error:', err);
+      this.error = true;
+      this.errorMessage = 'Registration failed. Please check your details.';
+    }
   }
 
 }

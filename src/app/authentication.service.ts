@@ -17,7 +17,24 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  cadastrarUsuario(usuario: any) {
+  async cadastrarUsuario(data: any): Promise<number> {
+    //mocked user data
+    let res: { userId: number, userPerms: number } = {
+      userId: 1,
+      userPerms: 2
+    };
+    await this.delay(3000);
+    this.sucessfulLogin(res);
+    return 200;
+  }
+  async loginUsuario(data: any): Promise<number> {
+    //mocked user data
+    let res: { userId: number, userPerms: number } = {
+      userId: 1,
+      userPerms: 2
+    };
+    await this.delay(3000);
+    //this.sucessfulLogin(res);
     return 400;
   }
 
@@ -28,6 +45,17 @@ export class AuthenticationService {
     return this.userPerms;
   }
 
+  
+
+  sucessfulLogin(res: any) {
+    this.userID = res.userId;
+    this.userPerms = res.userPerms;
+    this.isLoggedIn = true;
+    localStorage.setItem('userId', this.userID.toString());
+    localStorage.setItem('userPerms', this.userPerms.toString());
+    localStorage.setItem('isLoggedIn', 'true');
+    this.router.navigate(['/']);
+  }
   // Initialize Google OAuth2 token client
   initGoogleAuth(): void {
     this.tokenClient = google.accounts.oauth2.initTokenClient({
@@ -44,7 +72,7 @@ export class AuthenticationService {
           res => {
             console.log('Backend auth response:', res);
             // Redirect to home on success
-            this.router.navigate(['/']);
+            this.sucessfulLogin(res);
           },
           err => console.error('Backend auth error:', err)
         );
@@ -66,5 +94,9 @@ export class AuthenticationService {
     const url = `${environment.apiUrl}/auth/google`;
     return of("Sucess"); //mocked temporary
     //return this.http.post(url, { access_token: accessToken });
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

@@ -2,10 +2,12 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh;
     margin: 0;
     background-color: transparent;
+    padding: 20px 0;
+    overflow-y: auto;
 }
 
 .lowerOptions{
@@ -63,6 +65,7 @@ input[type="password"] {
 button {
     width: 100%;
     padding: 12px;
+    margin: 1%;
     background-color: #ad4e00;
     color: white;
     border: none;
@@ -163,3 +166,11 @@ a:hover {
             width: 20px;
             height: 20px;
         }
+
+/* Center the loading spinner and error alert */
+.spinner-container, .alert {
+    width: auto;
+    margin: 16px auto;
+    display: flex;
+    justify-content: center;
+}

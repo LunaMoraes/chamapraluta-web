@@ -1,94 +1,104 @@
-
 <body>
-  <div *ngIf="isLogin==0" class="component-container proportions-cadastro">
-    <h2 class="banner-title">Login</h2>
-    <form action="#" method="post">
-      <div class="form-group">
-        <label for="username">Email</label>
-        <input type="text" id="username" name="username" required>
+  <div class="component-container proportions-cadastro">
+    <div *ngIf="isLogin==0">
+      <h2 class="banner-title">Login</h2>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="username">Email</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+          <button class="esqueceu-senha">Esqueceu sua Senha?</button>
+        </div>
+        <div class="separator"></div>
+
+        <button *ngIf="!loading" type="submit" (click)="startLogin()">Entrar</button>
+        <div *ngIf="loading" class="spinner-container">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div *ngIf="error" class="alert alert-warning">
+          <p>{{ errorMessage }}</p>
+        </div>
+      </form>
+
+      <div class="options">
+        <p>Ainda não tem uma conta? </p>
+        <button class="lowerOptions" (click)="changeLogin('register')">Cadastre-se</button>
       </div>
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input type="password" id="password" name="password" required>
-      </div>
+
+      <hr>
+
       <div>
-        <button class="esqueceu-senha">Esqueceu sua Senha?</button>
+        <button class="google-btn" (click)="signInAndAuthorize()">
+          <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" alt="Google logo">
+          <span>Entrar com Google</span>
+        </button>
       </div>
-      <div class="separator"></div>
-
-      <button type="submit">Entrar</button>
-    </form>
-        
-    <div class="options">
-      <p>Ainda não tem uma conta? </p>
-      <button class="lowerOptions" (click)="changeLogin('register')">Cadastre-se</button>
     </div>
 
-    <hr>
-
-    <div class="">
-      <button class="google-btn" (click)="signInAndAuthorize()">
-        <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_32dp.png" alt="Google logo">
-        <span>Entrar com Google</span>
-      </button>
-    </div>
-
-    </div>
-    <div *ngIf="isLogin==1" class="component-container proportions-cadastro">
-        <h2 class="banner-title">Cadastro</h2>
-        <form action="#" method="post">
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" required>
+    <div *ngIf="isLogin==1">
+      <h2 class="banner-title">Cadastro</h2>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="radio">Vai querer chamar manifestações?</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="choice" value="1" (click)="selectOrginzer(1)"> Sim
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="choice" value="0" (click)="selectOrginzer(0)"> Não
+            </label>
+          </div>
+          <div *ngIf="isOrganizerSelected == 1">
+            <label for="tel" class="form-group">Telefone de Contato</label>
+            <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
+            <label for="organizacoes">Selecione uma organização:</label>
+            <select [(ngModel)]="selectedOption" class="custom-dropdown">
+              <option value="" disabled>Selecione uma opção</option>
+              <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+            </select>
+            <div id="outros-container" style="display: none;" *ngIf="otherselected == 1">
+              <label for="outros">Especifique:</label>
+              <input type="text" id="outros" name="outros_organizacao">
             </div>
-            <div class="form-group">
-                <label for="nome">email</label>
-                <input type="text" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-                <label for="radio">Vai querer chamar manifestações?</label>
-                    <div class="radio-group">
-                    <label>
-                        <input type="radio" name="choice" value="1" (click)="selectOrginzer(1)"> Sim
-                        
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" name="choice" value="0" (click)="selectOrginzer(0)"> Não
-                    </label>
-                    </div>
-                <div *ngIf="isOrganizerSelected == 1">
-                    <label for="tel" class="form-group">Telefone de Contato</label>
-                    <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required>
-                <label for="organizacoes">Selecione uma organização:</label>
-                <select [(ngModel)]="selectedOption" class="custom-dropdown">
-                    <option value="" disabled>Selecione uma opção</option>
-                    <option *ngFor="let opt of options" [value]="opt">
-                        {{ opt }}
-                    </option>
-                </select>
-
-<div id="outros-container" style="display: none;" *ngIf="otherselected == 1">
-  <label for="outros">Especifique:</label>
-  <input type="text" id="outros" name="outros_organizacao">
-</div>
-
-
-                </div>
-               
-                <div *ngIf="isOrganizerSelected == 0">
-                </div>
-                
-            </div> 
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Entrar</button>
-        </form>
-        <div class="options">
-            <button class="lowerOptions" (click)="changeLogin('login')">Ja tem uma conta? Acesse!</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" required>
         </div>
 
+        <button *ngIf="!loading" type="submit" (click)="startCadastro()">Cadastrar</button>
+        <div *ngIf="loading" class="spinner-container">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div *ngIf="error" class="alert alert-warning">
+          <p>{{ errorMessage }}</p>
+        </div>
+      </form>
+
+      <div class="options">
+        <button class="lowerOptions" (click)="changeLogin('login')">Já tem uma conta? Acesse!</button>
+      </div>
     </div>
-  </body>
+
+
+  </div>
+</body>
