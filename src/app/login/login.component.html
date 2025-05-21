@@ -5,11 +5,13 @@
       <form action="#" method="post">
         <div class="form-group">
           <label for="username">Email</label>
-          <input type="text" id="username" name="username" required placeholder="exemplo@email.com">
+          <input type="text" id="username" name="username" required placeholder="exemplo@email.com"
+            [(ngModel)]="username" [ngClass]="{'error-border': loginSubmitted && !username}">
         </div>
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required placeholder="🔒">
+          <input type="password" id="password" name="password" required placeholder="🔒"
+            [(ngModel)]="password" [ngClass]="{'error-border': loginSubmitted && !password}">
           <button class="esqueceu-senha" (click)="changeLogin('reset')">Esqueci minha senha</button>
         </div>
         <div class="separator"></div>
@@ -45,15 +47,18 @@
         <p class="subtitle">Dados básicos</p>
         <div class="form-group">
           <label for="nome" placeholder="Nome social">Nome</label>
-          <input type="text" id="nome" name="nome" required>
+          <input type="text" id="nome" name="nome" required
+            [(ngModel)]="nome" [ngClass]="{'error-border': registerSubmitted && !nome}">
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" id="email" name="email" required placeholder="exemplo@email.com">
+          <input type="text" id="email" name="registerEmail" required placeholder="exemplo@email.com"
+            [(ngModel)]="registerEmail" [ngClass]="{'error-border': registerSubmitted && !registerEmail}">
         </div>
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required>
+          <input type="password" id="password" name="password" required
+            [(ngModel)]="password" [ngClass]="{'error-border': registerSubmitted && !password}">
         </div>
         <div class="form-group">
           <p for="radio" class="subtitle">Pretende chamar manifestações?</p>
@@ -104,7 +109,8 @@
         <form>
           <div class="form-group">
             <label for="reset-email">Email</label>
-            <input [(ngModel)]="resetEmail" name="resetEmail" type="email" id="reset-email" required placeholder="exemplo@email.com">
+            <input [(ngModel)]="resetEmail" name="resetEmail" type="email" id="reset-email" required placeholder="exemplo@email.com"
+              [ngClass]="{'error-border': resetSubmitted && !resetEmail}">
           </div>
           <button class="" *ngIf="!loading" type="button" (click)="startPasswordReset()">Continuar</button>
           <div *ngIf="loading" class="spinner-container">
@@ -118,7 +124,8 @@
         <form>
           <p class="subtitle">Insira o código de verificação</p>
           <div class="form-group code-inputs">
-            <input *ngFor="let code of verificationCode; let i = index" [(ngModel)]="verificationCode[i]" name="code{{i}}" type="text" maxlength="1" class="code-input" />
+            <input *ngFor="let code of verificationCode; let i = index" [(ngModel)]="verificationCode[i]" name="code{{i}}" type="text" maxlength="1" class="code-input"
+              [ngClass]="{'error-border': verifySubmitted && !verificationCode[i]}" />
           </div>
           <button *ngIf="!loading" type="button" (click)="startVerifyPasswordReset()">Enviar código</button>
           <div *ngIf="loading" class="spinner-container">

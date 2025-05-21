@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarioService } from '../calendario.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgIf, NgFor, NgClass, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
   loading = false;
+  loginSubmitted: boolean = false;
+  registerSubmitted: boolean = false;
+  resetSubmitted: boolean = false;
+  verifySubmitted: boolean = false;
   error= false;
   errorMessage = '';
   // Password reset fields and step control
@@ -38,20 +42,27 @@ export class LoginComponent implements OnInit {
   orgsOptions: string[] = [];
 
   changeLogin(type: string){
+    this.resetStep = 0;
+    this.error = false;
+    this.errorMessage = '';
     if (type === 'login') {
       this.isLogin = 0;
-      this.resetStep = 0;
+      
     } else if (type === 'register') {
       this.isLogin = 1;
-      this.resetStep = 0;
     } else if (type === 'reset') {
       this.isLogin = 2;
-      this.resetStep = 0;
     }
   }
   
   // Initiate password reset by sending email
   async startPasswordReset() {
+    this.resetSubmitted = true;
+    if (!this.resetEmail) {
+      this.error = true;
+      this.errorMessage = 'Por favor informe seu e-mail.';
+      return;
+    }
     this.loading = true;
     this.error = false;
     try {
@@ -72,6 +83,12 @@ export class LoginComponent implements OnInit {
   
   // Verify reset code and complete reset
   async startVerifyPasswordReset() {
+    this.verifySubmitted = true;
+    if (this.verificationCode.some(c => !c)) {
+      this.error = true;
+      this.errorMessage = 'Por favor insira o código completo.';
+      return;
+    }
     this.loading = true;
     this.error = false;
     const code = this.verificationCode.join('');
@@ -117,6 +134,12 @@ export class LoginComponent implements OnInit {
   }
 
   async startLogin() {
+    this.loginSubmitted = true;
+    if (!this.username || !this.password) {
+      this.error = true;
+      this.errorMessage = 'Por favor preencha todos os campos de login.';
+      return;
+    }
     let data = {
       username: this.username,
       password: this.password
@@ -139,6 +162,12 @@ export class LoginComponent implements OnInit {
     }
   }
   async startCadastro() {
+    this.registerSubmitted = true;
+    if (!this.nome || !this.registerEmail || !this.password) {
+      this.error = true;
+      this.errorMessage = 'Por favor preencha todos os campos de cadastro.';
+      return;
+    }
     if (this.isOtherSelected) {
       this.selectedOption = this.outros;
     }

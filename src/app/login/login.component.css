@@ -240,3 +240,7 @@ label {
   color: #A6A09B;
   background: #292524;
 }
+
+.error-border {
+  border-color: #dc3545 !important;
+}
