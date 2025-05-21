@@ -79,7 +79,8 @@ html, body {
   color: #A6A09B;
   letter-spacing: 0.01em;
   background-color: transparent;
-  border: none;
+  border: none; 
+  height: 49px;
 }
 input {
   background: #292524;
@@ -112,7 +113,8 @@ input {
 /* Adjust main-content-area margin on mobile */
 @media (max-width: 768px) {
   .main-content-area {
-    margin: 1%;
+    margin: 0;
+    padding: 1%;
   }
 }
 

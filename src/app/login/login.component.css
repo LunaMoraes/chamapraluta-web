@@ -42,19 +42,15 @@ body {
 
 }
 
-/* For Tablets */
-@media (max-width: 768px) {
-  .proportions-cadastro {
-    padding: 20px;
-    margin: 15px;
-  }
-}
-
 /* Make container full-width on small screens */
 @media (max-width: 768px) {
   .proportions-cadastro {
     width: 100%;
     max-width: none;
+    padding: 16px;
+    margin: 2px;
+    box-sizing: border-box;
+    margin-top: 15%;
   }
 }
 
@@ -86,6 +82,7 @@ input[type="password"], select {
 }
 
 button {
+  height: 49px;
   width: 100%;
   padding: 12px;
   margin: 1%;
