@@ -244,3 +244,21 @@ label {
 .error-border {
   border-color: #dc3545 !important;
 }
+
+.code-input-single {
+  width: calc(5 * 40px + 4 * 8px); /* five boxes 40px wide + four gaps */
+  padding: 10px;
+  border: 1.5px solid #79716B;
+  border-radius: 8px;
+  background: #292524;
+  color: #A6A09B;
+  box-sizing: border-box;
+  font-family: 'Inter', monospace;
+  font-size: 24px;
+  letter-spacing: 24px;
+  text-align: center;
+}
+.code-input-single::placeholder {
+  letter-spacing: 24px;
+  color: #A6A09B;
+}

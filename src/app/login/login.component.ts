@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   // Password reset fields and step control
   resetEmail: string = '';
-  verificationCode: string[] = Array(5).fill('');
+  // Single verification code input (5 characters)
+  codeInput: string = '';
   resetStep: number = 0;
   // Login form fields
   username: string = '';
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
 
   changeLogin(type: string){
     this.resetStep = 0;
+    this.codeInput = '';
     this.error = false;
     this.errorMessage = '';
     if (type === 'login') {
@@ -84,14 +86,14 @@ export class LoginComponent implements OnInit {
   // Verify reset code and complete reset
   async startVerifyPasswordReset() {
     this.verifySubmitted = true;
-    if (this.verificationCode.some(c => !c)) {
+    if (this.codeInput.length < 5) {
       this.error = true;
       this.errorMessage = 'Por favor insira o código completo.';
       return;
     }
     this.loading = true;
     this.error = false;
-    const code = this.verificationCode.join('');
+    const code = this.codeInput;
     try {
       const result = await this.authService.verifyPasswordReset({ email: this.resetEmail, code });
       this.loading = false;
@@ -114,7 +116,7 @@ export class LoginComponent implements OnInit {
   onSelectionChange() {
     this.isOtherSelected = this.selectedOption === 'Outro' ? 1 : 0;
   }
-
+  
   ngOnInit(): void {
     this.authService.initGoogleAuth();
     this.orgsOptions = this.calendarioService.retrieveOrgs();

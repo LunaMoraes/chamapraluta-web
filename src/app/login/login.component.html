@@ -123,9 +123,12 @@
       <div *ngIf="resetStep===1">
         <form>
           <p class="subtitle">Insira o código de verificação</p>
-          <div class="form-group code-inputs">
-            <input *ngFor="let code of verificationCode; let i = index" [(ngModel)]="verificationCode[i]" name="code{{i}}" type="text" maxlength="1" class="code-input"
-              [ngClass]="{'error-border': verifySubmitted && !verificationCode[i]}" />
+          <div class="form-group">
+            <input id="code-input" type="text" maxlength="5" name="codeInput"
+              [(ngModel)]="codeInput"
+              class="code-input-single"
+              [ngClass]="{'error-border': verifySubmitted && codeInput.length < 5}"
+              placeholder="_____">
           </div>
           <button *ngIf="!loading" type="button" (click)="startVerifyPasswordReset()">Enviar código</button>
           <div *ngIf="loading" class="spinner-container">
