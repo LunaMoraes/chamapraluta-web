@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
   loading = false;
   error= false;
   errorMessage = '';
+  // Password reset fields and step control
+  resetEmail: string = '';
+  verificationCode: string[] = Array(5).fill('');
+  resetStep: number = 0;
   // Login form fields
   username: string = '';
   password: string = '';
@@ -36,12 +40,57 @@ export class LoginComponent implements OnInit {
   changeLogin(type: string){
     if (type === 'login') {
       this.isLogin = 0;
+      this.resetStep = 0;
     } else if (type === 'register') {
       this.isLogin = 1;
+      this.resetStep = 0;
     } else if (type === 'reset') {
       this.isLogin = 2;
+      this.resetStep = 0;
     }
   }
+  
+  // Initiate password reset by sending email
+  async startPasswordReset() {
+    this.loading = true;
+    this.error = false;
+    try {
+      const result = await this.authService.requestPasswordReset({ email: this.resetEmail });
+      this.loading = false;
+      if (result === 200) {
+        this.resetStep = 1;
+      } else {
+        this.error = true;
+        this.errorMessage = 'Não foi possível enviar o e-mail de redefinição.';
+      }
+    } catch (err) {
+      this.loading = false;
+      this.error = true;
+      this.errorMessage = 'Erro ao enviar e-mail de redefinição.';
+    }
+  }
+  
+  // Verify reset code and complete reset
+  async startVerifyPasswordReset() {
+    this.loading = true;
+    this.error = false;
+    const code = this.verificationCode.join('');
+    try {
+      const result = await this.authService.verifyPasswordReset({ email: this.resetEmail, code });
+      this.loading = false;
+      if (result === 200) {
+        // On successful verification, navigate to home via authService
+      } else {
+        this.error = true;
+        this.errorMessage = 'Código inválido. Tente novamente.';
+      }
+    } catch (err) {
+      this.loading = false;
+      this.error = true;
+      this.errorMessage = 'Erro ao verificar o código.';
+    }
+  }
+
   selectOrganizer(organizer: number){
     this.isOrganizerSelected = organizer
   }

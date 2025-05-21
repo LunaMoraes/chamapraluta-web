@@ -99,4 +99,18 @@ export class AuthenticationService {
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+  
+  // Initiates password reset by sending reset email
+  async requestPasswordReset(data: { email: string }): Promise<number> {
+    // Mock sending reset email
+    await this.delay(2000);
+    return 200;
+  }
+  
+  // Verifies the password reset code
+  async verifyPasswordReset(data: { email: string; code: string }): Promise<number> {
+    // Mock code verification
+    await this.delay(2000);
+    return 200;
+  }
 }

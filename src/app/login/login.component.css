@@ -223,3 +223,19 @@ label {
     display: flex;
     justify-content: center;
 }
+
+/* Styles for verification code inputs */
+.code-inputs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.code-input {
+  width: 40px;
+  padding: 10px;
+  text-align: center;
+  border: 1.5px solid #79716B;
+  border-radius: 8px;
+  color: #A6A09B;
+  background: #292524;
+}

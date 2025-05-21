@@ -10,7 +10,7 @@
         <div class="form-group">
           <label for="password">Senha</label>
           <input type="password" id="password" name="password" required placeholder="🔒">
-          <button class="esqueceu-senha">Esqueci minha senha</button>
+          <button class="esqueceu-senha" (click)="changeLogin('reset')">Esqueci minha senha</button>
         </div>
         <div class="separator"></div>
 
@@ -97,6 +97,40 @@
       </div>
     </div>
 
+    <div *ngIf="isLogin==2">
+      <h2 class="title">RESETAR SENHA</h2>
+      <!-- Step 1: Request reset email -->
+      <div *ngIf="resetStep===0">
+        <form>
+          <div class="form-group">
+            <label for="reset-email">Email</label>
+            <input [(ngModel)]="resetEmail" name="resetEmail" type="email" id="reset-email" required placeholder="exemplo@email.com">
+          </div>
+          <button class="" *ngIf="!loading" type="button" (click)="startPasswordReset()">Continuar</button>
+          <div *ngIf="loading" class="spinner-container">
+            <div class="spinner-border text-light" role="status"><span class="visually-hidden">Loading...</span></div>
+          </div>
+          <div *ngIf="error" class="alert alert-warning"><p>{{ errorMessage }}</p></div>
+        </form>
+      </div>
+      <!-- Step 2: Verify code -->
+      <div *ngIf="resetStep===1">
+        <form>
+          <p class="subtitle">Insira o código de verificação</p>
+          <div class="form-group code-inputs">
+            <input *ngFor="let code of verificationCode; let i = index" [(ngModel)]="verificationCode[i]" name="code{{i}}" type="text" maxlength="1" class="code-input" />
+          </div>
+          <button *ngIf="!loading" type="button" (click)="startVerifyPasswordReset()">Enviar código</button>
+          <div *ngIf="loading" class="spinner-container">
+            <div class="spinner-border text-light" role="status"><span class="visually-hidden">Loading...</span></div>
+          </div>
+          <div *ngIf="error" class="alert alert-warning"><p>{{ errorMessage }}</p></div>
+        </form>
+      </div>
+      <div class="options">
+        <button class="lowerOptions" (click)="changeLogin('login')">Voltar ao login</button>
+      </div>
+    </div>
 
   </div>
 </body>
