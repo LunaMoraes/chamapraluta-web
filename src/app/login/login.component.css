@@ -71,7 +71,8 @@ label {
 }
 
 input[type="text"],
-input[type="password"], select {
+input[type="password"],
+input[type="email"], select {
   width: 100%;
   padding: 10px;
   border: 1.5px solid #79716B;
