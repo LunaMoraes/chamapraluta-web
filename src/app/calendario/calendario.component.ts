@@ -22,6 +22,9 @@ export class CalendarioComponent implements OnInit {
   view: string = 'table';
   userID?: number;
   userPerms?: number;
+  // Pagination properties
+  itemsPerPage = 5;
+  currentPage = 0;
 
   constructor(private calendarioService: CalendarioService, private authService: AuthenticationService) {}
 
@@ -36,11 +39,38 @@ export class CalendarioComponent implements OnInit {
     this.calendarioService.carregarDadosGerais().subscribe(dados => {
       this.planilhaDados = dados;
       this.loadingData = false;
+      this.currentPage = 0;
     });
   }
   private carregarTabelaPropria() {
-    this.planilhaPropria = this.calendarioService.carregarDadosProprios(this.userID)
+    this.planilhaPropria = this.calendarioService.carregarDadosProprios(this.userID);
     this.loadingData = false;
+    this.currentPage = 0;
+  }
+
+  // Paged data getters
+  get pagedDados(): any[] {
+    const start = this.currentPage * this.itemsPerPage;
+    return this.planilhaDados.slice(start, start + this.itemsPerPage);
+  }
+  get pagedPropria(): any[] {
+    const start = this.currentPage * this.itemsPerPage;
+    return this.planilhaPropria.slice(start, start + this.itemsPerPage);
+  }
+  // Total pages
+  get totalPagesDados(): number {
+    return Math.ceil(this.planilhaDados.length / this.itemsPerPage);
+  }
+  get totalPagesPropria(): number {
+    return Math.ceil(this.planilhaPropria.length / this.itemsPerPage);
+  }
+  // Navigation
+  prevPage(): void {
+    if (this.currentPage > 0) this.currentPage--;
+  }
+  nextPage(): void {
+    if (this.view === 'table' && this.currentPage < this.totalPagesDados - 1) this.currentPage++;
+    if (this.view === 'minhaTabela' && this.currentPage < this.totalPagesPropria - 1) this.currentPage++;
   }
 
   // Function to open the modal and set the selected event

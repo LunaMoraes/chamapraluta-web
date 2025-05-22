@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ato of planilhaDados">
+        <tr *ngFor="let ato of pagedDados">
           <td>{{ ato.Nome }}</td>
           <td>{{ ato.Estado }}</td>
           <td>{{ ato.Cidade }}</td>
@@ -45,6 +45,11 @@
         </tr>
       </tbody>
     </table>
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="currentPage===0">&larr;</button>
+      <span>{{ currentPage + 1 }} / {{ totalPagesDados }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPagesDados">&rarr;</button>
+    </div>
   </div>
 
   <!-- Tabela com os manifestações próprias -->
@@ -63,7 +68,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ato of planilhaPropria">
+        <tr *ngFor="let ato of pagedPropria">
           <td>{{ ato.Nome }}</td>
           <td>{{ ato.Estado }}</td>
           <td>{{ ato.Cidade }}</td>
@@ -78,6 +83,11 @@
         </tr>
       </tbody>
     </table>
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="currentPage===0">&larr;</button>
+      <span>{{ currentPage + 1 }} / {{ totalPagesPropria }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPagesPropria">&rarr;</button>
+    </div>
   </div>
 
   <!-- Cadastrar manifestação-->
@@ -119,6 +129,7 @@
 
       <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
+  </div>
 
   <!-- Modal com detalhes-->
   <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
