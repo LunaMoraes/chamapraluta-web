@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Added FormsModule and ReactiveFormsModule
 import { CalendarioService } from '../calendario.service';
 import { AuthenticationService } from '../authentication.service';
+import { timeout } from 'rxjs/operators';
+import { TimeoutError } from 'rxjs';
 
 @Component({
   selector: 'app-calendario',
@@ -29,6 +31,9 @@ export class CalendarioComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: number = 1;
   formSubmitted = false;
+  loadingSubmit = false;
+  errorSubmit = false;
+  errorSubmitMessage = '';
   categorias = [
     "Luta Trabalhista",
     "Luta Campesina",
@@ -64,8 +69,42 @@ export class CalendarioComponent implements OnInit {
     this.currentPage = 0;
   }
 
-  cadastrarAto() {
-    
+  cadastrarAto(): void {
+    this.formSubmitted = true;
+    // Validate required fields
+    const required = ['Nome','Estado','Cidade','Local','Data','Categoria','Descricao','Org'];
+    for (const field of required) {
+      if (!this.newAto[field]) {
+        return;
+      }
+    }
+    this.loadingSubmit = true;
+    this.errorSubmit = false;
+    this.calendarioService.cadastrarAto(this.newAto)
+      .pipe(timeout(2000))
+      .subscribe(
+        (res: number) => {
+          this.loadingSubmit = false;
+          if (res === 200) {
+            // success: reset form and go to table
+            this.newAto = {};
+            this.formSubmitted = false;
+            this.changeView('minhaTabela');
+          } else {
+            this.errorSubmit = true;
+            this.errorSubmitMessage = 'Insufficient permissions';
+          }
+        },
+        err => {
+          this.loadingSubmit = false;
+          if (err instanceof TimeoutError) {
+            this.errorSubmitMessage = 'Request timed out';
+          } else {
+            this.errorSubmitMessage = 'Insufficient permissions';
+          }
+          this.errorSubmit = true;
+        }
+      );
   }
   // Paged data getters
   get pagedDados(): any[] {
