@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { NgIf, NgFor } from '@angular/common';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,13 +12,14 @@ import { NgIf, NgFor } from '@angular/common';
 })
 
 export class DashboardComponent {
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService, private authService: AuthenticationService) {}
   pautaList: any[] = [];
   detailsPauta: any = [];
   showModal: boolean = false;
 
   ngOnInit(): void { // Added ngOnInit
     this.carregarPautas();
+    console.log("isloggedIn: ", this.authService.isLoggedIn);
   }
 
   private carregarPautas() {

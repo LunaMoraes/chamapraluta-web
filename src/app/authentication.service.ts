@@ -54,7 +54,7 @@ export class AuthenticationService {
     localStorage.setItem('userId', this.userID.toString());
     localStorage.setItem('userPerms', this.userPerms.toString());
     localStorage.setItem('isLoggedIn', 'true');
-    this.router.navigate(['/']);
+    this.router.navigate(['/dashboard']);
   }
   // Initialize Google OAuth2 token client
   initGoogleAuth(): void {
