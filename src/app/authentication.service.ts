@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of, firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { environment } from '../environment/environment';
 
 declare const google: any;
@@ -26,24 +26,33 @@ export class AuthenticationService {
   }
 
   async cadastrarUsuario(data: any): Promise<number> {
-    //mocked user data
-    let res: { userId: number, userPerms: number } = {
-      userId: 1,
-      userPerms: 2
-    };
-    await this.delay(3000);
-    this.sucessfulLogin(res);
-    return 200;
+    const url = `${environment.apiUrl}/auth/register`;
+    try {
+      const resp = await firstValueFrom(
+        this.http.post<{userId:number;userPerms:number}>(url, data, { observe: 'response' })
+      );
+      if (resp.status === 200 && resp.body) {
+        this.sucessfulLogin(resp.body);
+      }
+      return resp.status;
+    } catch (err: any) {
+      return err.status || 500;
+    }
   }
+
   async loginUsuario(data: any): Promise<number> {
-    //mocked user data
-    let res: { userId: number, userPerms: number } = {
-      userId: 1,
-      userPerms: 2
-    };
-    await this.delay(3000);
-    //this.sucessfulLogin(res);
-    return 400;
+    const url = `${environment.apiUrl}/auth/login`;
+    try {
+      const resp = await firstValueFrom(
+        this.http.post<{userId:number;userPerms:number}>(url, data, { observe: 'response' })
+      );
+      if (resp.status === 200 && resp.body) {
+        this.sucessfulLogin(resp.body);
+      }
+      return resp.status;
+    } catch (err: any) {
+      return err.status || 500;
+    }
   }
 
   getUserId(){
@@ -53,17 +62,44 @@ export class AuthenticationService {
     return this.userPerms;
   }
 
-  
-
   sucessfulLogin(res: any) {
     this.userID = res.userId;
     this.userPerms = res.userPerms;
     this.isLoggedIn = true;
+    const now = Date.now();
+    // Store token timestamp for refresh
+    localStorage.setItem('tokenTimestamp', now.toString());
     localStorage.setItem('userId', this.userID.toString());
     localStorage.setItem('userPerms', this.userPerms.toString());
     localStorage.setItem('isLoggedIn', 'true');
     this.router.navigate(['/dashboard']);
   }
+
+  // Refresh access token if older than 30 minutes
+  refreshTokenIfNeeded(): void {
+    const ts = localStorage.getItem('tokenTimestamp');
+    if (!ts) return;
+    const timestamp = parseInt(ts, 10);
+    const elapsed = Date.now() - timestamp;
+    // 30 minutes in ms
+    const halfHour = 30 * 60 * 1000;
+    if (elapsed > halfHour) {
+      const url = 'http://localhost:8000/api/auth/token/refresh/';
+      this.http.post<{access_token: string}>(url, {})
+        .subscribe(
+          resp => {
+            // update timestamp
+            localStorage.setItem('tokenTimestamp', Date.now().toString());
+          },
+          err => {
+            // on error, clear session and redirect to login
+            this.clearSession();
+            this.router.navigate(['/login']);
+          }
+        );
+    }
+  }
+
   // Initialize Google OAuth2 token client
   initGoogleAuth(): void {
     this.tokenClient = google.accounts.oauth2.initTokenClient({
@@ -100,8 +136,7 @@ export class AuthenticationService {
   // Authenticate with Google OAuth2 token
   authenticateWithGoogle(accessToken: string): Observable<any> {
     const url = `${environment.apiUrl}/auth/google`;
-    return of("Sucess"); //mocked temporary
-    //return this.http.post(url, { access_token: accessToken });
+    return this.http.post<{userId:number;userPerms:number}>(url, { access_token: accessToken });
   }
 
   private delay(ms: number): Promise<void> {
@@ -110,16 +145,28 @@ export class AuthenticationService {
   
   // Initiates password reset by sending reset email
   async requestPasswordReset(data: { email: string }): Promise<number> {
-    // Mock sending reset email
-    await this.delay(2000);
-    return 200;
+    const url = `${environment.apiUrl}/auth/password-reset`;
+    try {
+      const resp = await firstValueFrom(
+        this.http.post(url, data, { observe: 'response' })
+      );
+      return resp.status;
+    } catch (err: any) {
+      return err.status || 500;
+    }
   }
   
   // Verifies the password reset code
   async verifyPasswordReset(data: { email: string; code: string }): Promise<number> {
-    // Mock code verification
-    await this.delay(2000);
-    return 200;
+    const url = `${environment.apiUrl}/auth/password-reset/verify`;
+    try {
+      const resp = await firstValueFrom(
+        this.http.post(url, data, { observe: 'response' })
+      );
+      return resp.status;
+    } catch (err: any) {
+      return err.status || 500;
+    }
   }
 
   // Retrieve a cookie value by name
@@ -146,25 +193,14 @@ export class AuthenticationService {
 
   // Checks for existing session token and initializes session
   async checkSession(): Promise<boolean> {
-     const token = this.getCookie('sessionToken');
-    if (true) {
-      try {
-        //const res = await firstValueFrom(this.http.get<{ userId: number; userPerms: number }>(
-        //  `${environment.apiUrl}/auth/session`
-        //)); 
-        const res2 = { userId: 1, userPerms: 2 };
-        this.userID = res2.userId;
-        this.userPerms = res2.userPerms;
-        this.isLoggedIn = true;
-        localStorage.setItem('userId', res2.userId.toString());
-        localStorage.setItem('userPerms', res2.userPerms.toString());
-        localStorage.setItem('isLoggedIn', 'true');
-        return true;
-      } catch (error) {
-        this.clearSession();
-        return false;
-      }
-    } else {
+    const url = `${environment.apiUrl}/auth/session`;
+    try {
+      const user = await firstValueFrom(
+        this.http.get<{userId:number;userPerms:number}>(url)
+      );
+      this.sucessfulLogin(user);
+      return true;
+    } catch (err) {
       this.clearSession();
       return false;
     }

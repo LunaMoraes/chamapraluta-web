@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router'; // Import Router
+import { Router, RouterOutlet, NavigationStart } from '@angular/router'; // Import Router and NavigationStart
 import { NgIf } from '@angular/common';
 import { tsParticles } from "@tsparticles/engine";
 import { NgParticlesService, NgxParticlesModule } from "@tsparticles/angular";
 import { loadPolygonMaskPlugin } from "@tsparticles/plugin-polygon-mask";
 import { loadFirePreset } from "@tsparticles/preset-fire";
 import { AuthenticationService } from './authentication.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,16 @@ export class AppComponent {
     private router: Router,
     private authService: AuthenticationService,
     private readonly particlesService: NgParticlesService
-  ) {} // Inject Router and AuthenticationService
+  ) {
+    // On each navigation, refresh token if needed (exclude login page)
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationStart)
+    ).subscribe((e: NavigationStart) => {
+      if (e.url !== '/login') {
+        this.authService.refreshTokenIfNeeded();
+      }
+    });
+  }
   id = "tsparticles";
 
   navigateToLogin(): void {
