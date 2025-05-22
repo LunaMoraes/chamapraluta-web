@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +45,12 @@ export class CalendarioService {
   }
 
   cadastrarAto(ato: any) {
-    
+    // Mock API call that returns status 200 after 1s delay
+    return of(200).pipe(
+      delay(1000)
+    );
   }
+
   carregarDadosProprios(userID: any) {
     const dados = [
       { id: 1, Nome: 'manifestações 1', Data: '18-05-2025', Local: 'Local 1', Horario: '10:00', Categoria: 'Categoria 1', status: 'finalizada' },
