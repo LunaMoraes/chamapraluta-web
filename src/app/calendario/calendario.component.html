@@ -19,13 +19,13 @@
     <table class="eventos-table">
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>Estado</th>
-          <th>Cidade</th>
-          <th>Local</th>
-          <th>Data</th>
-          <th>Horario</th>
-          <th class="sortable" (click)="sortBy('Categoria')">Categoria</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Nome'" [class.sorted-desc]="sortColumn==='Nome' && sortDirection===-1" (click)="sortBy('Nome')">Nome</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Estado'" [class.sorted-desc]="sortColumn==='Estado' && sortDirection===-1" (click)="sortBy('Estado')">Estado</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Cidade'" [class.sorted-desc]="sortColumn==='Cidade' && sortDirection===-1" (click)="sortBy('Cidade')">Cidade</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Local'" [class.sorted-desc]="sortColumn==='Local' && sortDirection===-1" (click)="sortBy('Local')">Local</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Data'" [class.sorted-desc]="sortColumn==='Data' && sortDirection===-1" (click)="sortBy('Data')">Data</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Horario'" [class.sorted-desc]="sortColumn==='Horario' && sortDirection===-1" (click)="sortBy('Horario')">Horario</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Categoria'" [class.sorted-desc]="sortColumn==='Categoria' && sortDirection===-1" (click)="sortBy('Categoria')">Categoria</th>
           <th></th>
         </tr>
       </thead>
@@ -57,13 +57,13 @@
     <table class="eventos-table">
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>Estado</th>
-          <th>Cidade</th>
-          <th>Local</th>
-          <th>Data</th>
-          <th>Horario</th>
-          <th class="sortable" (click)="sortBy('Categoria')">Categoria</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Nome'" [class.sorted-desc]="sortColumn==='Nome' && sortDirection===-1" (click)="sortBy('Nome')">Nome</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Estado'" [class.sorted-desc]="sortColumn==='Estado' && sortDirection===-1" (click)="sortBy('Estado')">Estado</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Cidade'" [class.sorted-desc]="sortColumn==='Cidade' && sortDirection===-1" (click)="sortBy('Cidade')">Cidade</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Local'" [class.sorted-desc]="sortColumn==='Local' && sortDirection===-1" (click)="sortBy('Local')">Local</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Data'" [class.sorted-desc]="sortColumn==='Data' && sortDirection===-1" (click)="sortBy('Data')">Data</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Horario'" [class.sorted-desc]="sortColumn==='Horario' && sortDirection===-1" (click)="sortBy('Horario')">Horario</th>
+          <th class="sortable" [class.sorted]="sortColumn==='Categoria'" [class.sorted-desc]="sortColumn==='Categoria' && sortDirection===-1" (click)="sortBy('Categoria')">Categoria</th>
           <th></th>
         </tr>
       </thead>
