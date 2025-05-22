@@ -181,7 +181,7 @@ export class AuthenticationService {
     return null;
   }
 
-  // Clears user session data
+  // Clears user session data (including token cookie)
   private clearSession(): void {
     this.userID = 0;
     this.userPerms = 0;
@@ -189,16 +189,29 @@ export class AuthenticationService {
     localStorage.removeItem('userId');
     localStorage.removeItem('userPerms');
     localStorage.removeItem('isLoggedIn');
+    // delete session token cookie
+    document.cookie = 'sessionToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
 
-  // Checks for existing session token and initializes session
+  // Checks for existing session via token & userID
   async checkSession(): Promise<boolean> {
+    // 1. retrieve token and userID
+    const token = this.getCookie('sessionToken');
+    const storedId = localStorage.getItem('userId');
+    if (!token || !storedId) {
+      this.clearSession();
+      return false;
+    }
+    // 2. validate with server by sending userId and sessionToken
     const url = `${environment.apiUrl}/auth/session`;
     try {
-      const user = await firstValueFrom(
-        this.http.get<{userId:number;userPerms:number}>(url)
+      const resp = await firstValueFrom(
+        this.http.post<{userId:number;userPerms:number}>(url,
+          { userId: Number(storedId), sessionToken: token }
+        )
       );
-      this.sucessfulLogin(user);
+      // on success, reinitialize session
+      this.sucessfulLogin(resp);
       return true;
     } catch (err) {
       this.clearSession();
