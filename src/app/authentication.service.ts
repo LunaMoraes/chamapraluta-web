@@ -15,7 +15,15 @@ export class AuthenticationService {
   userID = 0;
   private tokenClient: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    // Initialize from localStorage
+    const logged = localStorage.getItem('isLoggedIn') === 'true';
+    this.isLoggedIn = logged;
+    if (logged) {
+      this.userID = Number(localStorage.getItem('userId')) || 0;
+      this.userPerms = Number(localStorage.getItem('userPerms')) || 0;
+    }
+  }
 
   async cadastrarUsuario(data: any): Promise<number> {
     //mocked user data
@@ -138,13 +146,13 @@ export class AuthenticationService {
 
   // Checks for existing session token and initializes session
   async checkSession(): Promise<boolean> {
-    const token = this.getCookie('sessionToken');
-    if (false) {
+     const token = this.getCookie('sessionToken');
+    if (true) {
       try {
         //const res = await firstValueFrom(this.http.get<{ userId: number; userPerms: number }>(
         //  `${environment.apiUrl}/auth/session`
         //)); 
-        const res2 = { userId: 1, userPerms: 0 };
+        const res2 = { userId: 1, userPerms: 2 };
         this.userID = res2.userId;
         this.userPerms = res2.userPerms;
         this.isLoggedIn = true;

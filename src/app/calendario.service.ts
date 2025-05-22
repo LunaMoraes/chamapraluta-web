@@ -42,6 +42,9 @@ export class CalendarioService {
       );
   }
 
+  cadastrarAto(ato: any) {
+    
+  }
   carregarDadosProprios(userID: any) {
     const dados = [
       { id: 1, Nome: 'manifestações 1', Data: '18-05-2025', Local: 'Local 1', Horario: '10:00', Categoria: 'Categoria 1', status: 'finalizada' },

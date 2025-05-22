@@ -28,6 +28,18 @@ export class CalendarioComponent implements OnInit {
   // Sorting properties
   sortColumn: string = '';
   sortDirection: number = 1;
+  formSubmitted = false;
+  categorias = [
+    "Luta Trabalhista",
+    "Luta Campesina",
+    "Luta Ambiental",
+    "Movimento Estudantil",
+    "Movimento Indigena",
+    "Movimento LGBTQIAP+",
+    "Movimento Feminista",
+    "Movimento Preto",
+    "Movimento Por Direitos PCD"
+  ]
 
   constructor(private calendarioService: CalendarioService, private authService: AuthenticationService) {}
 
@@ -52,6 +64,9 @@ export class CalendarioComponent implements OnInit {
     this.currentPage = 0;
   }
 
+  cadastrarAto() {
+    
+  }
   // Paged data getters
   get pagedDados(): any[] {
     const start = this.currentPage * this.itemsPerPage;
@@ -102,6 +117,7 @@ export class CalendarioComponent implements OnInit {
     }
   }
   submitForm(){
+    this.formSubmitted = true;
     // Handle form submission logic here
     console.log('Form submitted');
   }

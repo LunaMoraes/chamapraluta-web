@@ -490,3 +490,27 @@
     font-size: 12px;
   }
 }
+
+/* Submit button styling like login */
+.submit-btn {
+  height: 49px;
+  width: 100%;
+  padding: 12px;
+  margin: 1% 0;
+  background-color: #ad4e00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+.submit-btn:hover {
+  background-color: #e07a22;
+}
+
+/* Error-border class for required fields */
+.error-border {
+  border-color: #dc2626 !important;
+}

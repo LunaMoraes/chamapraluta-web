@@ -2,8 +2,8 @@
   <h2>Calendário de Atos</h2>
   <!--Nav Buttons-->
   <div *ngIf="isLoggedIn">
-    <button *ngIf="view!='cadastro'" class="btn btn-secondary bar" (click)="changeView('cadastro')">Cadastrar Manifestaçao</button>
-    <button *ngIf="view!='minhaTabela'" class="btn btn-secondary bar" (click)="changeView('minhaTabela')">Minhas Manifestações</button>
+    <button *ngIf="view!='cadastro'" class="btn btn-secondary bar" (click)="changeView('cadastro')">Cadastrar Ato</button>
+    <button *ngIf="view!='minhaTabela'" class="btn btn-secondary bar" (click)="changeView('minhaTabela')">Meus Atos</button>
     <button *ngIf="view!='table'" class="btn btn-secondary bar" (click)="changeView('table')">Tabela Geral</button>
   </div>
 
@@ -90,44 +90,47 @@
     </div>
   </div>
 
-  <!-- Cadastrar manifestação-->
+  <!-- Cadastrar ato-->
    <div *ngIf="loadingData==false && view=='cadastro'" class="table-container">
-    <h3>Cadastro de Manifestações</h3>
+    <h3>Cadastro de Atos</h3>
     <form (ngSubmit)="submitForm()" #eventForm="ngForm" class="p-3 border rounded">
       <div class="mb-3">
         <label for="nome" class="form-label">Nome do Evento</label>
-        <input type="text" id="nome" name="nome" [(ngModel)]="newAto.Nome" required class="form-control">
+        <input type="text" id="nome" name="nome" [(ngModel)]="newAto.Nome" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Nome}">
       </div>
       <div class="mb-3">
         <label for="estado" class="form-label">Estado</label>
-        <input type="text" id="estado" name="estado" [(ngModel)]="newAto.Estado" required class="form-control">
+        <input type="text" id="estado" name="estado" [(ngModel)]="newAto.Estado" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Estado}">
       </div>
       <div class="mb-3">
         <label for="cidade" class="form-label">Cidade</label>
-        <input type="text" id="cidade" name="cidade" [(ngModel)]="newAto.Cidade" required class="form-control">
+        <input type="text" id="cidade" name="cidade" [(ngModel)]="newAto.Cidade" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Cidade}">
       </div>
       <div class="mb-3">
         <label for="local" class="form-label">Local</label>
-        <input type="text" id="local" name="local" [(ngModel)]="newAto.Local" required class="form-control">
+        <input type="text" id="local" name="local" [(ngModel)]="newAto.Local" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Local}">
       </div>
       <div class="mb-3">
         <label for="data" class="form-label">Data e hora</label>
-        <input type="datetime-local" id="data" name="data" [(ngModel)]="newAto.Data" required class="form-control">
+        <input type="datetime-local" id="data" name="data" [(ngModel)]="newAto.Data" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Data}">
       </div>
       <div class="mb-3">
         <label for="categoria" class="form-label">Categoria</label>
-        <input type="text" id="categoria" name="categoria" [(ngModel)]="newAto.Categoria" required class="form-control">
+        <select id="categoria" name="categoria" [(ngModel)]="newAto.Categoria" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Categoria}">
+          <option value="" disabled selected>Selecione a categoria</option>
+          <option *ngFor="let opt of categorias" [value]="opt">{{ opt }}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="descricao" class="form-label">Descrição</label>
-        <textarea id="descricao" name="descricao" [(ngModel)]="newAto.Descricao" required class="form-control"></textarea>
+        <textarea id="descricao" name="descricao" [(ngModel)]="newAto.Descricao" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Descricao}"></textarea>
       </div>
       <div class="mb-3">
         <label for="org" class="form-label">Organização</label>
-        <input type="text" id="org" name="org" [(ngModel)]="newAto.Org" required class="form-control">
+        <input type="text" id="org" name="org" [(ngModel)]="newAto.Org" required class="form-control" [ngClass]="{'error-border': formSubmitted && !newAto.Org}">
       </div>
 
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
+      <button type="submit" class="submit-btn" (click)="cadastrarAto()">Cadastrar</button>
     </form>
   </div>
 
