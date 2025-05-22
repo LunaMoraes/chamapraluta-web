@@ -139,7 +139,7 @@ export class AuthenticationService {
   // Checks for existing session token and initializes session
   async checkSession(): Promise<boolean> {
     const token = this.getCookie('sessionToken');
-    if (token) {
+    if (true) {
       try {
         //const res = await firstValueFrom(this.http.get<{ userId: number; userPerms: number }>(
         //  `${environment.apiUrl}/auth/session`

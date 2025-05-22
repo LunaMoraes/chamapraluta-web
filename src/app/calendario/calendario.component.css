@@ -265,3 +265,135 @@
     align-items: center;
     width: 100%;
   }
+
+/* Container styling to match other components */
+.component-container {
+  font-family: 'Inter', sans-serif;
+  background-color: #161111;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #E5E5E5;
+}
+
+/* Title styling */
+.component-container h2 {
+  font-family: 'archerhero', serif;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Navbar buttons */
+.btn-secondary.bar {
+  background-color: #292524;
+  color: #A6A09B;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-radius: 48px;
+  padding: 8px 16px;
+  margin-right: 8px;
+  transition: background 0.3s;
+}
+.btn-secondary.bar:hover {
+  background-color: #3a3430;
+  color: white;
+}
+
+/* Table container override */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+/* Event table styling */
+.eventos-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+}
+.eventos-table th, .eventos-table td {
+  padding: 12px 16px;
+  border: 1px solid #3a3430;
+}
+.eventos-table th {
+  background-color: #292524;
+  color: #E5E5E5;
+  font-family: 'archerhero', serif;
+  font-size: 18px;
+  position: sticky;
+  top: 0;
+}
+.eventos-table td {
+  background-color: #1f1f1f;
+  color: #E5E5E5;
+  font-size: 14px;
+}
+.eventos-table tr:nth-child(even) td {
+  background-color: #292524;
+}
+.eventos-table tr:hover td {
+  background-color: #3a3430;
+}
+
+/* Action buttons */
+.eventos-table .btn-dark {
+  background-color: #4a413d;
+  border: none;
+  color: #E5E5E5;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.eventos-table .btn-dark:hover {
+  background-color: #5e524c;
+}
+
+/* Pagination controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  color: #A6A09B;
+}
+.pagination-controls button {
+  background: none;
+  border: none;
+  color: #A6A09B;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.pagination-controls button:disabled {
+  color: #3a3430;
+  cursor: default;
+}
+.pagination-controls button:hover:not(:disabled) {
+  color: white;
+}
+.pagination-controls span {
+  font-size: 14px;
+}
+
+/* Modal overrides for readability */
+.modal-overlay {
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  font-family: 'Inter', sans-serif;
+  color: #161111;
+}
+.modal-content h3 {
+  font-family: 'archerhero', serif;
+  margin-bottom: 12px;
+}
+.modal-content p {
+  margin: 6px 0;
+  font-size: 14px;
+}
