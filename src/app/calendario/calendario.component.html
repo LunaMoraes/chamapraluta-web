@@ -25,7 +25,7 @@
           <th>Local</th>
           <th>Data</th>
           <th>Horario</th>
-          <th>Categoria</th>
+          <th class="sortable" (click)="sortBy('Categoria')">Categoria</th>
           <th></th>
         </tr>
       </thead>
@@ -40,7 +40,7 @@
           <td>{{ ato.Categoria }}</td> 
           <td> 
             <button class="btn btn-dark" (click)="openModal(ato)">Info Extra</button>
-            <button *ngIf="userID==ato.ownerID || userPerms==2" class="btn btn-dark" (click)="openModal(ato)">Editar</button>
+            <button *ngIf="ato.ownerID != null && (userID != null && userID!=0) && (userID==ato.ownerID || userPerms===2)" class="btn btn-dark" (click)="openModal(ato)">Editar</button>
           </td>
         </tr>
       </tbody>
@@ -63,7 +63,7 @@
           <th>Local</th>
           <th>Data</th>
           <th>Horario</th>
-          <th>Categoria</th>
+          <th class="sortable" (click)="sortBy('Categoria')">Categoria</th>
           <th></th>
         </tr>
       </thead>

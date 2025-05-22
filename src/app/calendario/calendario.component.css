@@ -397,3 +397,47 @@
   margin: 6px 0;
   font-size: 14px;
 }
+
+/* Orange titles */
+.component-container h2,
+.table-container h3 {
+  font-family: 'archerhero', serif;
+  color: #ad4e00;
+}
+
+/* Form inputs in cadastro to match login component */
+.table-container input[type="text"],
+.table-container input[type="datetime-local"],
+.table-container select,
+.table-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1.5px solid #79716B;
+  border-radius: 8px;
+  background-color: #292524;
+  color: #A6A09B;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+/* Sortable headers */
+.sortable {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+.sortable:hover {
+  color: #F54900;
+}
+.sortable::after {
+  content: '\25B2'; /* Up arrow by default */
+  font-size: 0.6em;
+  position: absolute;
+  right: 8px;
+  transition: transform 0.2s;
+}
+/* When descending, flip arrow */
+.sortable.sorted-desc::after {
+  transform: rotate(180deg);
+}

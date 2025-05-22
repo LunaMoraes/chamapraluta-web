@@ -25,6 +25,9 @@ export class CalendarioComponent implements OnInit {
   // Pagination properties
   itemsPerPage = 5;
   currentPage = 0;
+  // Sorting properties
+  sortColumn: string = '';
+  sortDirection: number = 1;
 
   constructor(private calendarioService: CalendarioService, private authService: AuthenticationService) {}
 
@@ -33,6 +36,7 @@ export class CalendarioComponent implements OnInit {
     this.userID = this.authService.getUserId();
     this.userPerms = this.authService.getUserPerms();
     this.carregarTabelaGeral();
+    console.log("user id: ", this.userID);
   }
 
   private carregarTabelaGeral() {
@@ -100,5 +104,27 @@ export class CalendarioComponent implements OnInit {
   submitForm(){
     // Handle form submission logic here
     console.log('Form submitted');
+  }
+
+  // Sort table by column
+  sortBy(column: string): void {
+    // Toggle direction if same column
+    if (this.sortColumn === column) {
+      this.sortDirection = -this.sortDirection;
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 1;
+    }
+    // Choose array based on view
+    const dataArray = this.view === 'table' ? this.planilhaDados : this.planilhaPropria;
+    dataArray.sort((a, b) => {
+      const aVal = a[column] ?? '';
+      const bVal = b[column] ?? '';
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return aVal.localeCompare(bVal) * this.sortDirection;
+      }
+      return ((aVal > bVal ? 1 : (aVal < bVal ? -1 : 0)) * this.sortDirection);
+    });
+    this.currentPage = 0;
   }
 }
