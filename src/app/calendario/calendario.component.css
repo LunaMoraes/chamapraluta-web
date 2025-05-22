@@ -243,6 +243,19 @@
       width: 95%;
       padding: 20px;
     }
+
+    .component-container {
+      background-color: #161111;
+      padding: 16px;
+      margin: 2px;
+      margin-top: 15%; /* push down below fixed banner */
+      box-sizing: border-box;
+    }
+    /* Hide the Local column (4th) in mobile tables */
+    .eventos-table th:nth-child(4),
+    .eventos-table td:nth-child(4) {
+      display: none;
+    }
   }
   
   @media (max-width: 480px) {
@@ -440,4 +453,40 @@
 /* When descending, flip arrow */
 .sortable.sorted-desc::after {
   transform: rotate(180deg);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .component-container {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    /* Center and push below fixed header */
+    margin: 20% auto 16px auto;
+  }
+  /* Hide the Local column (4th) in mobile tables */
+  .eventos-table th:nth-child(4),
+  .eventos-table td:nth-child(4),
+  /* Hide Categoria column (7th) */
+  .eventos-table th:nth-child(7),
+  .eventos-table td:nth-child(7) {
+    display: none;
+  }
+  /* Nav buttons full width */
+  .btn-secondary.bar {
+    width: 100%;
+    margin: 8px 0;
+  }
+  /* Table font and padding smaller */
+  .eventos-table th,
+  .eventos-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  /* Pagination controls wrap and smaller */
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
 }
