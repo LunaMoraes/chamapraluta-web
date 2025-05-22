@@ -2,10 +2,12 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { HomeRedirectGuard } from './home-redirect.guard';
+import { LoginRedirectGuard } from './login-redirect.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
+    { path: '', component: DashboardComponent, canActivate: [HomeRedirectGuard], pathMatch: 'full' },
+    { path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard] },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'calendario', component: CalendarioComponent }
 ];

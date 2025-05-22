@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, firstValueFrom } from 'rxjs';
 import { environment } from '../environment/environment';
 
 declare const google: any;
@@ -10,9 +10,9 @@ declare const google: any;
   providedIn: 'root'
 })
 export class AuthenticationService {
-  userPerms = 2;
-  isLoggedIn = true;
-  userID = 1;
+  userPerms = 0;
+  isLoggedIn = false;
+  userID = 0;
   private tokenClient: any;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -112,5 +112,53 @@ export class AuthenticationService {
     // Mock code verification
     await this.delay(2000);
     return 200;
+  }
+
+  // Retrieve a cookie value by name
+  private getCookie(name: string): string | null {
+    const cookies = document.cookie.split('; ');
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key === name) {
+        return decodeURIComponent(value);
+      }
+    }
+    return null;
+  }
+
+  // Clears user session data
+  private clearSession(): void {
+    this.userID = 0;
+    this.userPerms = 0;
+    this.isLoggedIn = false;
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userPerms');
+    localStorage.removeItem('isLoggedIn');
+  }
+
+  // Checks for existing session token and initializes session
+  async checkSession(): Promise<boolean> {
+    const token = this.getCookie('sessionToken');
+    if (token) {
+      try {
+        //const res = await firstValueFrom(this.http.get<{ userId: number; userPerms: number }>(
+        //  `${environment.apiUrl}/auth/session`
+        //)); 
+        const res2 = { userId: 1, userPerms: 2 };
+        this.userID = res2.userId;
+        this.userPerms = res2.userPerms;
+        this.isLoggedIn = true;
+        localStorage.setItem('userId', res2.userId.toString());
+        localStorage.setItem('userPerms', res2.userPerms.toString());
+        localStorage.setItem('isLoggedIn', 'true');
+        return true;
+      } catch (error) {
+        this.clearSession();
+        return false;
+      }
+    } else {
+      this.clearSession();
+      return false;
+    }
   }
 }

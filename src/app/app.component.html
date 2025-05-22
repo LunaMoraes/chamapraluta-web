@@ -2,8 +2,8 @@
 <header class="app-banner">
   <div class="banner-top">
     <button class="menu-toggle" (click)="toggleMenu()">☰</button>
-    <h1 class="banner-title">CHAMA PRA LUTA</h1>
-    
+    <h1 class="banner-title" (click)="navigateToDashboard()">CHAMA PRA LUTA</h1>
+
   </div>
   <nav class="app-nav" [class.open]="isMenuOpen">
     <button class="nav-button" (click)="navigateToDashboard()">Home</button>

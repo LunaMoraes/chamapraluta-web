@@ -5,6 +5,7 @@ import { tsParticles } from "@tsparticles/engine";
 import { NgParticlesService, NgxParticlesModule } from "@tsparticles/angular";
 import { loadPolygonMaskPlugin } from "@tsparticles/plugin-polygon-mask";
 import { loadFirePreset } from "@tsparticles/preset-fire";
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,11 @@ export class AppComponent {
   isLoggedIn = false;
   isMenuOpen = false;
 
-  constructor(private router: Router, private readonly particlesService: NgParticlesService) {} // Inject Router
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    private readonly particlesService: NgParticlesService
+  ) {} // Inject Router and AuthenticationService
   id = "tsparticles";
 
   navigateToLogin(): void {
@@ -26,7 +31,7 @@ export class AppComponent {
     this.isMenuOpen = false;
   }
   navigateToDashboard(): void {
-    this.router.navigate(['/']); 
+    this.router.navigate(['/dashboard']); 
     this.isMenuOpen = false;
   }
   navigateToCalendario(): void {
@@ -39,20 +44,17 @@ export class AppComponent {
   }
 
   async ngOnInit(): Promise<void> {
+    // Check user session and set login state
+    this.isLoggedIn = await this.authService.checkSession();
+    // Initialize particles
     await this.particlesService.init(async () => {});
     await loadFirePreset(tsParticles);
-    
     await tsParticles.load({
       id: this.id,
       options: {
         preset: 'fire',
-        background: {
-          color: '#000000'
-        },
-        fullScreen: { // Ensure particles are in the background
-          enable: true,
-          zIndex: 1 /* Changed from 0 to -1 */
-        }
+        background: { color: '#000000' },
+        fullScreen: { enable: true, zIndex: 1 }
       }
     });
   }

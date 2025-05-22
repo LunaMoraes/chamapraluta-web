@@ -128,7 +128,7 @@
               [(ngModel)]="codeInput"
               class="code-input-single"
               [ngClass]="{'error-border': verifySubmitted && codeInput.length < 5}"
-              placeholder="_____">
+              placeholder="">
           </div>
           <button *ngIf="!loading" type="button" (click)="startVerifyPasswordReset()">Enviar código</button>
           <div *ngIf="loading" class="spinner-container">
