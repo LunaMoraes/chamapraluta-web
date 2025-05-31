@@ -111,29 +111,24 @@ export class AuthenticationService {
             this.router.navigate(['/login']);
           }
         );
-    }
-  }
-
+    }  }
   // Initialize Google OAuth2 token client
   initGoogleAuth(): void {
     this.tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: environment.googleClientId,
       scope: 'email profile openid',
-      callback: (tokenResponse: any) => {
+      callback: async (tokenResponse: any) => {
         if (tokenResponse.error) {
           console.error('Google OAuth error:', tokenResponse.error);
           return;
+        }        console.log('Google token response:', tokenResponse);
+        // Send token to backend - include all relevant token information
+        try {
+          const status = await this.authenticateWithGoogle(tokenResponse);
+          console.log('Backend auth status:', status);
+        } catch (err) {
+          console.error('Backend auth error:', err);
         }
-        console.log('Google token:', tokenResponse.access_token);
-        // Send token to backend
-        this.authenticateWithGoogle(tokenResponse.access_token).subscribe(
-          res => {
-            console.log('Backend auth response:', res);
-            // Redirect to home on success
-            this.sucessfulLogin(res);
-          },
-          err => console.error('Backend auth error:', err)
-        );
       },
     });
   }
@@ -145,12 +140,32 @@ export class AuthenticationService {
       return;
     }
     this.tokenClient.requestAccessToken({ prompt: 'consent' });
-  }
-
-  // Authenticate with Google OAuth2 token
-  authenticateWithGoogle(accessToken: string): Observable<any> {
+  }  // Authenticate with Google OAuth2 token
+  async authenticateWithGoogle(tokenResponse: any): Promise<number> {
     const url = `${environment.apiUrl}/auth/google/`;
-    return this.http.post<{userId:number;userPerms:number}>(url, { access_token: accessToken });
+    try {
+      const resp = await firstValueFrom(
+        this.http.post<{userId:number;userPerms:number;session_token:string;refresh_token:string}>(url, 
+          { 
+            access_token: tokenResponse.access_token,
+            // Include additional token information if available
+            ...(tokenResponse.id_token && { id_token: tokenResponse.id_token }),
+            ...(tokenResponse.scope && { scope: tokenResponse.scope }),
+            ...(tokenResponse.token_type && { token_type: tokenResponse.token_type })
+          }, 
+          { observe: 'response' }
+        )
+      );
+      
+      if (resp.status === 200 && resp.body) {
+        this.sucessfulLogin(resp.body);
+      }
+      
+      return resp.status;
+    } catch (err: any) {
+      console.error('Google authentication error:', err);
+      return err.status || 500;
+    }
   }
 
   private delay(ms: number): Promise<void> {
