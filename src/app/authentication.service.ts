@@ -49,7 +49,7 @@ export class AuthenticationService {
   }
 
   async loginUsuario(data: any): Promise<number> {
-    const url = `${environment.apiUrl}/auth/login`;
+    const url = `${environment.apiUrl}/auth/login/`;
     try {
       const resp = await firstValueFrom(
         this.http.post<{userId:number;userPerms:number}>(url, data, { observe: 'response' })
