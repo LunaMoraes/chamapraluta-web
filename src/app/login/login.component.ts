@@ -185,7 +185,7 @@ export class LoginComponent implements OnInit {
     this.error = false;
     try {
       const result = await this.authService.cadastrarUsuario(data);
-      if (result !== 200) {
+      if (result !== 201) {
         this.loading = false;
         console.error('Registration failed with code:', result);
         this.error = true;

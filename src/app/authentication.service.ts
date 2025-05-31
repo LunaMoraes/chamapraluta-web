@@ -13,6 +13,8 @@ export class AuthenticationService {
   userPerms = 0;
   isLoggedIn = false;
   userID = 0;
+  refreshToken = '';
+  accessToken = '';
   private tokenClient: any;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -26,13 +28,15 @@ export class AuthenticationService {
   }
 
   async cadastrarUsuario(data: any): Promise<number> {
-    const url = `${environment.apiUrl}/auth/register`;
+    const url = `${environment.apiUrl}/auth/register/`;
     try {
       const resp = await firstValueFrom(
         this.http.post<{userId:number;userPerms:number}>(url, data, { observe: 'response' })
       );
-      if (resp.status === 200 && resp.body) {
+      if (resp.status === 201 && resp.body) {
+        console.log('User registered successfully:', resp.body);
         this.sucessfulLogin(resp.body);
+        return resp.status;
       }
       return resp.status;
     } catch (err: any) {
@@ -63,12 +67,15 @@ export class AuthenticationService {
   }
 
   sucessfulLogin(res: any) {
+    console.log('Login successful:', res);
     this.userID = res.userId;
     this.userPerms = res.userPerms;
     this.isLoggedIn = true;
-    const now = Date.now();
-    // Store token timestamp for refresh
-    localStorage.setItem('tokenTimestamp', now.toString());
+    this.accessToken = res.session_token;
+    this.refreshToken = res.refresh_token;
+
+    localStorage.setItem('accessToken', this.accessToken.toString());
+    localStorage.setItem('refreshToken', this.refreshToken.toString());
     localStorage.setItem('userId', this.userID.toString());
     localStorage.setItem('userPerms', this.userPerms.toString());
     localStorage.setItem('isLoggedIn', 'true');
@@ -189,8 +196,9 @@ export class AuthenticationService {
     localStorage.removeItem('userId');
     localStorage.removeItem('userPerms');
     localStorage.removeItem('isLoggedIn');
-    // delete session token cookie
-    document.cookie = 'sessionToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    
   }
 
   // Checks for existing session via token & userID

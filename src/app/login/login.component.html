@@ -22,7 +22,7 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-        <div *ngIf="error" class="alert alert-warning">
+        <div *ngIf="error" class="alert alert-danger">
           <p>{{ errorMessage }}</p>
         </div>
       </form>
@@ -92,7 +92,7 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-        <div *ngIf="error" class="alert alert-warning">
+        <div *ngIf="error" class="alert alert-danger">
           <p>{{ errorMessage }}</p>
         </div>
       </form>
@@ -116,7 +116,7 @@
           <div *ngIf="loading" class="spinner-container">
             <div class="spinner-border text-light" role="status"><span class="visually-hidden">Loading...</span></div>
           </div>
-          <div *ngIf="error" class="alert alert-warning"><p>{{ errorMessage }}</p></div>
+          <div *ngIf="error" class="alert alert-danger"><p>{{ errorMessage }}</p></div>
         </form>
       </div>
       <!-- Step 2: Verify code -->
@@ -134,7 +134,7 @@
           <div *ngIf="loading" class="spinner-container">
             <div class="spinner-border text-light" role="status"><span class="visually-hidden">Loading...</span></div>
           </div>
-          <div *ngIf="error" class="alert alert-warning"><p>{{ errorMessage }}</p></div>
+          <div *ngIf="error" class="alert alert-danger"><p>{{ errorMessage }}</p></div>
         </form>
       </div>
       <div class="options">
