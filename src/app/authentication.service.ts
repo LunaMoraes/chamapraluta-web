@@ -213,7 +213,6 @@ export class AuthenticationService {
     this.loginStateChanged.next(false);
     this.router.navigate(['/login']);
   }
-
   // Checks for existing session via token & userID
   async checkSession(): Promise<boolean> {
     // 1. retrieve token and userID from localStorage
@@ -224,21 +223,43 @@ export class AuthenticationService {
       return false;
     }
     // 2. validate with server by sending userId and sessionToken
-    const url = `${environment.apiUrl}/session`;
-    try {
+    const url = `${environment.apiUrl}/auth/session/`;    try {
       const resp = await firstValueFrom(
-        this.http.post<{userId:number;userPerms:number}>(url,
-          { userId: Number(storedId), sessionToken: token }
+        this.http.post<{userId:number;userPerms:number;newSessionToken?:string;newRefreshToken?:string}>(url,
+          { userId: Number(storedId), sessionToken: token },
+          { observe: 'response' }
         )
       );
-      // on success, reinitialize session
-      this.userID = resp.userId;
-      this.userPerms = resp.userPerms;
-      this.isLoggedIn = true;
-      this.accessToken = token;
-      this.refreshToken = localStorage.getItem('refreshToken') || '';
-      return true;
-    } catch (err) {
+        if (resp.status === 200 && resp.body) {
+        // on success, reinitialize session
+        this.userID = resp.body.userId;
+        this.userPerms = resp.body.userPerms;
+        this.isLoggedIn = true;
+        
+        if (resp.body.newSessionToken) {
+          this.accessToken = resp.body.newSessionToken;
+          localStorage.setItem('accessToken', this.accessToken);
+        } else {
+          this.accessToken = token;
+        }
+        
+        if (resp.body.newRefreshToken) {
+          this.refreshToken = resp.body.newRefreshToken;
+          localStorage.setItem('refreshToken', this.refreshToken);
+        } else {
+          this.refreshToken = localStorage.getItem('refreshToken') || '';
+        }
+        
+        return true;
+      } else {
+        // Invalid response, clear session
+        this.clearSession();
+        return false;
+      }
+    } catch (err: any) {
+      if (err.status === 401 || err.status) {
+        console.error('Unauthorized during session check:', err.status);
+      }
       this.clearSession();
       return false;
     }
