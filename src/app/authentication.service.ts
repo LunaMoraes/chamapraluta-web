@@ -149,7 +149,7 @@ export class AuthenticationService {
 
   // Authenticate with Google OAuth2 token
   authenticateWithGoogle(accessToken: string): Observable<any> {
-    const url = `${environment.apiUrl}/auth/google`;
+    const url = `${environment.apiUrl}/auth/google/`;
     return this.http.post<{userId:number;userPerms:number}>(url, { access_token: accessToken });
   }
 
@@ -159,7 +159,7 @@ export class AuthenticationService {
   
   // Initiates password reset by sending reset email
   async requestPasswordReset(data: { email: string }): Promise<number> {
-    const url = `${environment.apiUrl}/auth/password-reset`;
+    const url = `${environment.apiUrl}/auth/password-reset/`;
     try {
       const resp = await firstValueFrom(
         this.http.post(url, data, { observe: 'response' })
@@ -169,14 +169,19 @@ export class AuthenticationService {
       return err.status || 500;
     }
   }
-  
-  // Verifies the password reset code
+    // Verifies the password reset code
   async verifyPasswordReset(data: { email: string; code: string }): Promise<number> {
-    const url = `${environment.apiUrl}/auth/password-reset/verify`;
+    const url = `${environment.apiUrl}/auth/password-reset/verify/`;
     try {
       const resp = await firstValueFrom(
-        this.http.post(url, data, { observe: 'response' })
+        this.http.post<{userId:number;userPerms:number;session_token:string;refresh_token:string}>(url, data, { observe: 'response' })
       );
+      
+      if (resp.status === 200 && resp.body) {
+        // Password reset successful, log the user in
+        this.sucessfulLogin(resp.body);
+      }
+      
       return resp.status;
     } catch (err: any) {
       return err.status || 500;
