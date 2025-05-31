@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet, NavigationStart } from '@angular/router'; // Import Router and NavigationStart
 import { NgIf } from '@angular/common';
 import { tsParticles } from "@tsparticles/engine";
@@ -15,11 +15,10 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css', '../styles.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'chamapraluta';
   isLoggedIn = false;
   isMenuOpen = false;
-
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -32,6 +31,11 @@ export class AppComponent {
       if (e.url !== '/login') {
         this.authService.refreshTokenIfNeeded();
       }
+    });
+
+    // Listen for login state changes
+    this.authService.loginStateChanged.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
     });
   }
   id = "tsparticles";
@@ -46,6 +50,11 @@ export class AppComponent {
   }
   navigateToCalendario(): void {
     this.router.navigate(['/calendario']); 
+    this.isMenuOpen = false;
+  }
+
+  logout(): void {
+    this.authService.logout();
     this.isMenuOpen = false;
   }
 

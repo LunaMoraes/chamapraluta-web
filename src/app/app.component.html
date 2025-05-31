@@ -4,11 +4,11 @@
     <button class="menu-toggle" (click)="toggleMenu()">☰</button>
     <h1 class="banner-title" (click)="navigateToDashboard()">CHAMA PRA LUTA</h1>
 
-  </div>
-  <nav class="app-nav" [class.open]="isMenuOpen">
+  </div>  <nav class="app-nav" [class.open]="isMenuOpen">
     <button class="nav-button" (click)="navigateToDashboard()">Home</button>
     <ng-container *ngIf="isLoggedIn">
       <button class="nav-button">Perfil</button>
+      <button class="nav-button" (click)="logout()">Sair</button>
     </ng-container>
     <ng-container *ngIf="!isLoggedIn">
       <button class="nav-button" (click)="navigateToLogin()">Login</button>

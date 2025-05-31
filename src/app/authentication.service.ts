@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom, Subject } from 'rxjs';
 import { environment } from '../environment/environment';
 
 declare const google: any;
@@ -16,7 +16,9 @@ export class AuthenticationService {
   refreshToken = '';
   accessToken = '';
   private tokenClient: any;
-
+  
+  // Subject to notify components when login state changes
+  loginStateChanged = new Subject<boolean>();
   constructor(private http: HttpClient, private router: Router) {
     // Initialize from localStorage
     const logged = localStorage.getItem('isLoggedIn') === 'true';
@@ -24,6 +26,8 @@ export class AuthenticationService {
     if (logged) {
       this.userID = Number(localStorage.getItem('userId')) || 0;
       this.userPerms = Number(localStorage.getItem('userPerms')) || 0;
+      this.accessToken = localStorage.getItem('accessToken') || '';
+      this.refreshToken = localStorage.getItem('refreshToken') || '';
     }
   }
 
@@ -65,7 +69,6 @@ export class AuthenticationService {
   getUserPerms(){
     return this.userPerms;
   }
-
   sucessfulLogin(res: any) {
     console.log('Login successful:', res);
     this.userID = res.userId;
@@ -79,6 +82,10 @@ export class AuthenticationService {
     localStorage.setItem('userId', this.userID.toString());
     localStorage.setItem('userPerms', this.userPerms.toString());
     localStorage.setItem('isLoggedIn', 'true');
+    
+    // Emit login state change for app component to listen
+    this.loginStateChanged.next(true);
+    
     this.router.navigate(['/dashboard']);
   }
 
@@ -198,20 +205,26 @@ export class AuthenticationService {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    
+  }
+
+  // Public logout method
+  logout(): void {
+    this.clearSession();
+    this.loginStateChanged.next(false);
+    this.router.navigate(['/login']);
   }
 
   // Checks for existing session via token & userID
   async checkSession(): Promise<boolean> {
-    // 1. retrieve token and userID
-    const token = this.getCookie('sessionToken');
+    // 1. retrieve token and userID from localStorage
+    const token = localStorage.getItem('accessToken');
     const storedId = localStorage.getItem('userId');
     if (!token || !storedId) {
       this.clearSession();
       return false;
     }
     // 2. validate with server by sending userId and sessionToken
-    const url = `${environment.apiUrl}/auth/session`;
+    const url = `${environment.apiUrl}/session`;
     try {
       const resp = await firstValueFrom(
         this.http.post<{userId:number;userPerms:number}>(url,
@@ -219,7 +232,11 @@ export class AuthenticationService {
         )
       );
       // on success, reinitialize session
-      this.sucessfulLogin(resp);
+      this.userID = resp.userId;
+      this.userPerms = resp.userPerms;
+      this.isLoggedIn = true;
+      this.accessToken = token;
+      this.refreshToken = localStorage.getItem('refreshToken') || '';
       return true;
     } catch (err) {
       this.clearSession();
