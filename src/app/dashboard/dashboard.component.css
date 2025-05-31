@@ -9,7 +9,6 @@
 
 /* Featured Event Section */
 .featured-event-section {
-  background: linear-gradient(135deg, #3c2a7d 0%, #2d1b69 100%);
   padding: 24px 16px;
   margin-bottom: 24px;
 }
@@ -20,7 +19,7 @@
 
 .section-title {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
   color: #ffffff;
   margin: 0 0 16px 0;
   text-align: left;
@@ -444,5 +443,15 @@
 
   .card-description {
     font-size: 15px;
+  }
+
+  .title {
+    font-family: 'archerhero';
+    color: #F54900;
+  }
+
+  .carousel {
+    background: linear-gradient(135deg, #3c2a7d 0%, #2d1b69 100%);
+    border-radius: 5%;
   }
 }

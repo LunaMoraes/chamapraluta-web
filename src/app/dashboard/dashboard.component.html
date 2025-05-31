@@ -2,10 +2,10 @@
   <!-- Featured Event Section -->
   <div class="featured-event-section" *ngIf="eventoDestaque">
     <div class="featured-event-header">
-      <h2 class="section-title">Evento em destaque</h2>
+      <h2 class="title">Evento em destaque</h2>
     </div>
-    
-    <div class="featured-event-card">
+    <div class="carousel">
+      <div class="featured-event-card">
       <div class="event-image-container">
         <img [src]="eventoDestaque.image" [alt]="eventoDestaque.title" class="event-image">
         <div class="event-category-badge">{{ eventoDestaque.category }}</div>
@@ -27,13 +27,14 @@
           Saiba mais
         </button>
       </div>
+      </div>
     </div>
   </div>
 
   <!-- Other Demonstrations Section -->
   <div class="other-events-section" *ngIf="outrasManifestacoes && outrasManifestacoes.length > 0">
     <div class="section-header">
-      <h2 class="section-title">Outras manifestações</h2>
+      <h2 class="title">Outras manifestações</h2>
     </div>
     
     <div class="events-grid">
