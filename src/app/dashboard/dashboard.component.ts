@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { NgIf, NgFor } from '@angular/common';
 import { AuthenticationService } from '../authentication.service';
@@ -11,20 +11,24 @@ import { AuthenticationService } from '../authentication.service';
   styleUrl: './dashboard.component.css'
 })
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private authService: AuthenticationService) {}
-  pautaList: any[] = [];
+  
+  eventoDestaque: any = null;
+  outrasManifestacoes: any[] = [];
   detailsPauta: any = [];
   showModal: boolean = false;
 
-  ngOnInit(): void { // Added ngOnInit
-    this.carregarPautas();
+  ngOnInit(): void {
+    this.carregarDados();
     console.log("isloggedIn: ", this.authService.isLoggedIn);
   }
 
-  private carregarPautas() {
-    this.pautaList = this.dashboardService.carregarPautas();
-    console.log(this.pautaList); // Log the loaded data for debugging
+  private carregarDados() {
+    this.eventoDestaque = this.dashboardService.carregarEventoDestaque();
+    this.outrasManifestacoes = this.dashboardService.carregarOutrasManifestacoes();
+    console.log('Evento destaque:', this.eventoDestaque);
+    console.log('Outras manifestações:', this.outrasManifestacoes);
   }
 
   private carregarDetalhesPauta(pautaId: number) {
@@ -37,9 +41,17 @@ export class DashboardComponent {
     this.showModal = true;
   }
 
-  // Function to close the modal
   closeModal() {
     this.showModal = false;
     this.detailsPauta = null;
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
   }
 }

@@ -1,28 +1,89 @@
-<body>
-  <div *ngFor="let item of pautaList" class="card pauta-card">
-    <div class="card-body">
-      <h5 class="card-title">{{item.title}}</h5>
-      <p class="card-text">{{item.description}}</p>
-      <button type="button" class="btn btn-primary" (click)="openModal(item.id)">
-        Ver Detalhes
-      </button>
+<div class="dashboard-container">
+  <!-- Featured Event Section -->
+  <div class="featured-event-section" *ngIf="eventoDestaque">
+    <div class="featured-event-header">
+      <h2 class="section-title">Evento em destaque</h2>
+    </div>
+    
+    <div class="featured-event-card">
+      <div class="event-image-container">
+        <img [src]="eventoDestaque.image" [alt]="eventoDestaque.title" class="event-image">
+        <div class="event-category-badge">{{ eventoDestaque.category }}</div>
+      </div>
+      
+      <div class="event-content">
+        <h3 class="event-title">{{ eventoDestaque.title }}</h3>
+        <p class="event-description">{{ eventoDestaque.description }}</p>
+        
+        <div class="event-details">
+          <div class="event-meta">
+            <span class="event-date">📅 {{ formatDate(eventoDestaque.date) }}</span>
+            <span class="event-time">🕐 {{ eventoDestaque.time }}</span>
+            <span class="event-location">📍 {{ eventoDestaque.location }}</span>
+          </div>
+        </div>
+        
+        <button class="event-action-btn" (click)="openModal(eventoDestaque.id)">
+          Saiba mais
+        </button>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-    <button class="close-button" (click)="closeModal()">X</button>
-        <div class="modal-body" *ngIf="detailsPauta">
-          <!-- Display pauta details here -->
-          <p><strong>Título:</strong> {{ detailsPauta.title }}</p>
-          <p><strong>Descrição:</strong> {{ detailsPauta.details }}</p>
-          <!-- Add more details as needed -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Fechar</button>
+  <!-- Other Demonstrations Section -->
+  <div class="other-events-section" *ngIf="outrasManifestacoes && outrasManifestacoes.length > 0">
+    <div class="section-header">
+      <h2 class="section-title">Outras manifestações</h2>
+    </div>
+    
+    <div class="events-grid">
+      <div class="event-card" *ngFor="let evento of outrasManifestacoes" (click)="openModal(evento.id)">
+        <div class="card-content">
+          <h4 class="card-title">{{ evento.title }}</h4>
+          <p class="card-description">{{ evento.description }}</p>
+          
+          <div class="card-meta">
+            <span class="card-date">{{ formatDate(evento.date) }}</span>
+            <span class="card-time">{{ evento.time }}</span>
+          </div>
+          
+          <div class="card-location">
+            <span>📍 {{ evento.location }}</span>
+          </div>
         </div>
       </div>
+    </div>
   </div>
 
-
-</body>
+  <!-- Modal for Event Details -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Detalhes do Evento</h3>
+        <button class="close-button" (click)="closeModal()">
+          <span>✕</span>
+        </button>
+      </div>
+      
+      <div class="modal-body" *ngIf="detailsPauta">
+        <h4>{{ detailsPauta.title }}</h4>
+        <p class="modal-description">{{ detailsPauta.details }}</p>
+        
+        <div class="modal-manifestacoes" *ngIf="detailsPauta.manifestacoes && detailsPauta.manifestacoes.length > 0">
+          <h5>Manifestações relacionadas:</h5>
+          <ul>
+            <li *ngFor="let manifestacao of detailsPauta.manifestacoes">
+              <strong>{{ manifestacao.name }}</strong>: {{ manifestacao.description }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
