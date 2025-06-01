@@ -41,18 +41,16 @@ export class DashboardService {
         location: 'Avenida Principal'
       }
     ];
-  }
-
-  carregarDetalhesPauta(pautaId: number) {
-    // Mock data for demonstration purposes
+  }  carregarDetalhesPauta(pautaId: number) {
+    // Mock data for demonstration purposes - matching Figma design
     const detalhes = { 
-      id: 1, 
-      title: 'Pauta 1', 
-      details: 'Detalhes da Pauta 1',
-      manifestacoes: [
-        { id: 1, name: 'Manifestação 1', description: 'Descrição da Manifestação 1' },
-        { id: 2, name: 'Manifestação 2', description: 'Descrição da Manifestação 2' }
-      ]
+      id: pautaId, 
+      nome: 'Manifestação para a luta pelo direito do lorem ipsum dolor sit amet',
+      organizador: 'Nome do organizador',
+      local: 'Av. Paulista, 123',
+      data: '12 dezembro 2024, 14h',
+      descricao: 'Esta manifestação foi convocada em decorrência das medidas tomadas pelo governo federal em relação a medidas lorem ipsum dolor sit amet consectetur, adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      categoria: 'Movimento preto'
     };
 
     return detalhes;

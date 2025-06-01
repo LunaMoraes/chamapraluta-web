@@ -55,35 +55,43 @@
       </div>
     </div>
   </div>
-
   <!-- Modal for Event Details -->
   <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title">Detalhes do Evento</h3>
         <button class="close-button" (click)="closeModal()">
           <span>✕</span>
         </button>
       </div>
-      
-      <div class="modal-body" *ngIf="detailsPauta">
-        <h4>{{ detailsPauta.title }}</h4>
-        <p class="modal-description">{{ detailsPauta.details }}</p>
-        
-        <div class="modal-manifestacoes" *ngIf="detailsPauta.manifestacoes && detailsPauta.manifestacoes.length > 0">
-          <h5>Manifestações relacionadas:</h5>
-          <ul>
-            <li *ngFor="let manifestacao of detailsPauta.manifestacoes">
-              <strong>{{ manifestacao.name }}</strong>: {{ manifestacao.description }}
-            </li>
-          </ul>
+        <div class="modal-body" *ngIf="detailsPauta">
+        <div class="category-section">
+          <div class="category-tag">{{ detailsPauta.categoria }}</div>
         </div>
-      </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">
-          Fechar
-        </button>
+        
+        <h1 class="modal-title">{{ detailsPauta.nome }}</h1>
+        
+        <div class="organizer-section">
+          <div class="organizer-icon">
+            <span>K</span>
+          </div>
+          <span class="organizer-name">{{ detailsPauta.organizador }}</span>
+        </div>
+          <div class="event-details">
+          <h3 class="section-header">Local e hora</h3>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span class="detail-text">{{ detailsPauta.local }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📅</span>
+            <span class="detail-text">{{ detailsPauta.data }}</span>
+          </div>
+        </div>
+        
+        <div class="description-section">
+          <h3 class="description-title">Sobre o evento</h3>
+          <p class="description-text">{{ detailsPauta.descricao }}</p>
+        </div>
       </div>
     </div>
   </div>
