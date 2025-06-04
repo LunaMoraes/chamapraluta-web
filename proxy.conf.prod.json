@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://chamapraluta-server-production.up.railway.app",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

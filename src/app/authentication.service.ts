@@ -98,7 +98,7 @@ export class AuthenticationService {
     // 30 minutes in ms
     const halfHour = 30 * 60 * 1000;
     if (elapsed > halfHour) {
-      const url = 'http://localhost:8000/api/auth/token/refresh/';
+      const url = `${environment.apiUrl}/auth/token/refresh/`;
       this.http.post<{access_token: string}>(url, {})
         .subscribe(
           resp => {
