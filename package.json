@@ -2,9 +2,10 @@
   "name": "chamapraluta",
   "version": "0.0.0",  "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.prod.json",
-    "start-dev": "ng serve --host 0.0.0.0 --disable-host-check --proxy-config proxy.conf.dev.json",
-    "build": "ng build",
+    "start": "ng serve --configuration=production",
+    "start-dev": "ng serve --host 0.0.0.0 --disable-host-check --proxy-config proxy.conf.dev.json --configuration=development",
+    "build": "ng build --configuration=production",
+    "build-dev": "ng build --configuration=development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -44,8 +44,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
-          "configurations": {
-            "production": {
+          "configurations": {            "production": {
               "budgets": [
                 {
                   "type": "initial",
@@ -58,9 +57,14 @@
                   "maximumError": "10MB"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "development": {
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environment/environment.ts",
+                  "with": "src/environment/environment.prod.ts"
+                }
+              ]
+            },            "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -70,9 +74,6 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "proxy.conf.json"
-          },
           "configurations": {
             "production": {
               "buildTarget": "chamapraluta:build:production"
