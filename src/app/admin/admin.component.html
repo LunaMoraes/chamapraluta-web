@@ -29,10 +29,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let organizer of pendingOrganizers">
-          <td>{{ organizer.name }}</td>
+          <td>{{ organizer.nome }}</td>
           <td>{{ organizer.phone }}</td>
           <td>{{ organizer.email }}</td>
-          <td>{{ organizer.organization }}</td>
+          <td>{{ organizer.organizacao }}</td>
           <td class="actions-cell">
             <button 
               (click)="approveOrganizer(organizer.id)" 

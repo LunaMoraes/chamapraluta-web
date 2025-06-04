@@ -6,10 +6,10 @@ import { AuthenticationService } from './authentication.service';
 
 export interface PendingOrganizer {
   id: number;
-  name: string;
+  nome: string;
   phone: string;
   email: string;
-  organization: string;
+  organizacao: string;
 }
 
 @Injectable({
@@ -20,9 +20,7 @@ export class AdminService {
   constructor(
     private http: HttpClient, 
     private authService: AuthenticationService
-  ) { }
-
-  async fetchOrganizerPending(): Promise<PendingOrganizer[]> {
+  ) { }  async fetchOrganizerPending(): Promise<PendingOrganizer[]> {
     const url = `${environment.apiUrl}/admin/organizers/pending/`;
     const accessToken = localStorage.getItem('accessToken');
     const userId = localStorage.getItem('userId');
@@ -31,17 +29,17 @@ export class AdminService {
       throw new Error('No access token or user ID found');
     }
 
+    const data = {
+      accessToken: accessToken,
+      userId: Number(userId)
+    };
+
     try {
       const response = await firstValueFrom(
-        this.http.post<PendingOrganizer[]>(url, 
-          { userId: Number(userId) },
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            },
-            observe: 'response'
-          }
-        )
+        this.http.get<PendingOrganizer[]>(url, {
+          params: data,
+          observe: 'response'
+        })
       );
 
       if (response.status === 200 && response.body) {
@@ -58,7 +56,6 @@ export class AdminService {
       throw err;
     }
   }
-
   async approveOrganizer(organizerId: number): Promise<boolean> {
     const url = `${environment.apiUrl}/admin/organizers/approve/`;
     const accessToken = localStorage.getItem('accessToken');
@@ -68,19 +65,17 @@ export class AdminService {
       throw new Error('No access token or user ID found');
     }
 
+    const data = {
+      accessToken: accessToken,
+      userId: Number(userId),
+      organizerId: organizerId
+    };
+
     try {
       const response = await firstValueFrom(
         this.http.post(url, 
-          { 
-            userId: Number(userId),
-            organizerId: organizerId
-          },
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            },
-            observe: 'response'
-          }
+          data,
+          { observe: 'response' }
         )
       );
 
@@ -95,7 +90,6 @@ export class AdminService {
       throw err;
     }
   }
-
   async denyOrganizer(organizerId: number): Promise<boolean> {
     const url = `${environment.apiUrl}/admin/organizers/deny/`;
     const accessToken = localStorage.getItem('accessToken');
@@ -105,19 +99,17 @@ export class AdminService {
       throw new Error('No access token or user ID found');
     }
 
+    const data = {
+      accessToken: accessToken,
+      userId: Number(userId),
+      organizerId: organizerId
+    };
+
     try {
       const response = await firstValueFrom(
         this.http.post(url, 
-          { 
-            userId: Number(userId),
-            organizerId: organizerId
-          },
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            },
-            observe: 'response'
-          }
+          data,
+          { observe: 'response' }
         )
       );
 

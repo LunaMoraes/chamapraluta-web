@@ -32,6 +32,7 @@ export class AdminComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+    console.log('Pending organizers loaded:', this.pendingOrganizers);
   }
 
   async approveOrganizer(organizerId: number): Promise<void> {
