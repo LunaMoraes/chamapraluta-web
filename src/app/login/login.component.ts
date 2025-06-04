@@ -41,12 +41,28 @@ export class LoginComponent implements OnInit {
   selectedOption: string = '';
 
   orgsOptions: string[] = [];
-
   changeLogin(type: string){
     this.resetStep = 0;
     this.codeInput = '';
     this.error = false;
     this.errorMessage = '';
+    
+    // Clear all form inputs
+    this.username = '';
+    this.password = '';
+    this.nome = '';
+    this.registerEmail = '';
+    this.phone = '';
+    this.outros = '';
+    this.selectedOption = '';
+    this.resetEmail = '';
+    this.isOrganizerSelected = 0;
+    this.isOtherSelected = 0;
+    this.loginSubmitted = false;
+    this.registerSubmitted = false;
+    this.resetSubmitted = false;
+    this.verifySubmitted = false;
+    
     if (type === 'login') {
       this.isLogin = 0;
       
