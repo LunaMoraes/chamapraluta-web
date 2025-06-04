@@ -116,7 +116,47 @@ export class LoginComponent implements OnInit {
   onSelectionChange() {
     this.isOtherSelected = this.selectedOption === 'Outro' ? 1 : 0;
   }
-    async ngOnInit(): Promise<void> {
+  
+  // Phone mask methods
+  onPhoneInput(event: any): void {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remove non-digits
+    
+    // Apply phone mask
+    if (value.length >= 11) {
+      value = value.substring(0, 11); // Limit to 11 digits
+      value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } else if (value.length >= 7) {
+      value = value.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3');
+    } else if (value.length >= 3) {
+      value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+    } else if (value.length >= 1) {
+      value = value.replace(/(\d{0,2})/, '($1');
+    }
+    
+    this.phone = value;
+    input.value = value;
+  }
+  
+  onPhoneKeydown(event: KeyboardEvent): void {
+    // Allow: backspace, delete, tab, escape, enter
+    if ([8, 9, 27, 13, 46].indexOf(event.keyCode) !== -1 ||
+        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+        (event.keyCode === 65 && event.ctrlKey === true) ||
+        (event.keyCode === 67 && event.ctrlKey === true) ||
+        (event.keyCode === 86 && event.ctrlKey === true) ||
+        (event.keyCode === 88 && event.ctrlKey === true) ||
+        // Allow: home, end, left, right
+        (event.keyCode >= 35 && event.keyCode <= 39)) {
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57)) && (event.keyCode < 96 || event.keyCode > 105)) {
+      event.preventDefault();
+    }
+  }
+  
+  async ngOnInit(): Promise<void> {
     this.authService.initGoogleAuth();
     try {
       this.orgsOptions = await this.calendarioService.retrieveOrgs();

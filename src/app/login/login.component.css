@@ -72,7 +72,9 @@ label {
 
 input[type="text"],
 input[type="password"],
-input[type="email"], select {
+input[type="email"],
+input[type="tel"],
+select {
   width: 100%;
   padding: 10px;
   border: 1.5px solid #79716B;
@@ -80,6 +82,29 @@ input[type="email"], select {
   box-sizing: border-box;
   color: #A6A09B;
   background: #292524;
+}
+
+/* Additional phone input styling for consistency */
+input[type="tel"] {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+input[type="tel"]::placeholder {
+  color: #A6A09B;
+  opacity: 0.7;
+}
+
+/* Ensure all form inputs have consistent styling */
+.form-group input,
+.form-group select {
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #F54900;
 }
 
 button {

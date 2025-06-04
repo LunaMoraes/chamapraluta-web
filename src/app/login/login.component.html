@@ -71,13 +71,25 @@
               <input class="radio-input" type="radio" name="choice" value="0" (click)="selectOrganizer(0)"> Não
             </label>
           </div>          <div *ngIf="isOrganizerSelected == 1">
-            <label for="tel" class="form-group">Telefone de Contato</label>
-            <input type="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(XX) 99999-9999" title="Formato: (DDD) 99999-9999" maxlength="15" required [(ngModel)]="phone" name="phone">
-            <label for="organizacoes">Selecione uma organização:</label>
-            <select [(ngModel)]="selectedOption" name="selectedOption" class="custom-dropdown" (change)="onSelectionChange()">
-              <option value="" disabled>Selecione uma opção</option>
-              <option *ngFor="let opt of orgsOptions" [value]="opt">{{ opt }}</option>
-            </select>            <div id="outros-container" *ngIf="isOtherSelected == 1">
+            <div class="form-group">
+              <label for="tel">Telefone de Contato</label>
+              <input type="tel" 
+                     id="tel"
+                     name="phone"
+                     placeholder="(XX) 99999-9999" 
+                     maxlength="15" 
+                     required 
+                     [(ngModel)]="phone" 
+                     (input)="onPhoneInput($event)"
+                     (keydown)="onPhoneKeydown($event)">
+            </div>
+            <div class="form-group">
+              <label for="organizacoes">Selecione uma organização:</label>
+              <select [(ngModel)]="selectedOption" name="selectedOption" class="custom-dropdown" (change)="onSelectionChange()">
+                <option value="" disabled>Selecione uma opção</option>
+                <option *ngFor="let opt of orgsOptions" [value]="opt">{{ opt }}</option>
+              </select>
+            </div><div id="outros-container" *ngIf="isOtherSelected == 1">
               <label for="outros">Especifique:</label>
               <input type="text" id="outros" name="outros_organizacao" [(ngModel)]="outros">
             </div>
