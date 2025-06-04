@@ -3,13 +3,19 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../environment/environment';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarioService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService
+  ) { }
 
   carregarDadosGerais() {
     const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR33FIEH_t7Tzg7IKkT_ig0pBqVYsJzkplMuZRnP1Zkkx2wshRlhnHhcdwyqo1Zv2ADYrgs8Sz22io2/pub?gid=0&single=true&output=csv';
@@ -59,19 +65,41 @@ export class CalendarioService {
     ]
 
     return dados;
-  }
+  }  async retrieveOrgs(): Promise<string[]> {
+    const url = `${environment.apiUrl}/info/organizations/list/`;
 
-  retrieveOrgs() {
-    return [
-      'Psol',
-      'PT',
-      'Antiordem',
-      'Chama',
-      'Antra',
-      'IBRAT',
-      'Mães pela diversidade',
-      'Outro',
-      'Independente'
-    ];
+    const data = {
+      
+    };
+
+    try {
+      const response = await firstValueFrom(
+        this.http.get<{nome: string}[]>(url, {
+          params: data,
+          observe: 'response'
+        })
+      );
+
+      if (response.status === 200 && response.body) {
+        // Extract the 'nome' property from each object and add "Outro" and "Independente"
+        console.log('Organizations retrieved:', response.body);
+        const orgsNames = response.body.map(org => org.nome);
+        const orgsList = [...orgsNames, 'Outro', 'Independente'];
+        return orgsList;
+      }
+      
+      // If no data from server, return just the default options
+      return ['Outro', 'Independente'];
+    } catch (err: any) {
+      // Check if token needs refresh
+      if (err.status === 401) {
+        this.authService.refreshTokenIfNeeded();
+        throw new Error('Token expired, please try again');
+      }
+      console.error('Error retrieving organizations:', err);
+      
+      // Return default options on error
+      return ['Outro', 'Independente'];
+    }
   }
 }

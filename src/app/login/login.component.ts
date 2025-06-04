@@ -116,10 +116,15 @@ export class LoginComponent implements OnInit {
   onSelectionChange() {
     this.isOtherSelected = this.selectedOption === 'Outro' ? 1 : 0;
   }
-  
-  ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
     this.authService.initGoogleAuth();
-    this.orgsOptions = this.calendarioService.retrieveOrgs();
+    try {
+      this.orgsOptions = await this.calendarioService.retrieveOrgs();
+    } catch (err) {
+      console.error('Error loading organizations:', err);
+      // Fallback to default options if API call fails
+      this.orgsOptions = ['Outro', 'Independente'];
+    }
   }
 
 
