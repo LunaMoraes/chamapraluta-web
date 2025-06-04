@@ -19,11 +19,18 @@ export class AppComponent implements OnInit {
   title = 'chamapraluta';
   isLoggedIn = false;
   isMenuOpen = false;
+  userPerms = 0; // Add userPerms property
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     private readonly particlesService: NgParticlesService
   ) {
+    // Initialize userPerms from localStorage (consistent with AdminGuard)
+    const storedPerms = localStorage.getItem('userPerms');
+    this.userPerms = storedPerms ? Number(storedPerms) : 0;
+    console.log('Constructor - userPerms from localStorage:', this.userPerms);
+    console.log('Constructor - isLoggedIn from localStorage:', localStorage.getItem('isLoggedIn'));
+    
     // On each navigation, refresh token if needed (exclude login page)
     this.router.events.pipe(
       filter(e => e instanceof NavigationStart)
@@ -36,6 +43,10 @@ export class AppComponent implements OnInit {
     // Listen for login state changes
     this.authService.loginStateChanged.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
+      // Update userPerms from localStorage when login state changes
+      const storedPerms = localStorage.getItem('userPerms');
+      this.userPerms = storedPerms ? Number(storedPerms) : 0;
+      console.log('Login state changed - isLoggedIn:', isLoggedIn, 'userPerms:', this.userPerms);
     });
   }
   id = "tsparticles";
@@ -52,6 +63,10 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/calendario']); 
     this.isMenuOpen = false;
   }
+  navigateToAdmin(): void {
+    this.router.navigate(['/admin']); 
+    this.isMenuOpen = false;
+  }
 
   logout(): void {
     this.authService.logout();
@@ -60,11 +75,15 @@ export class AppComponent implements OnInit {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  async ngOnInit(): Promise<void> {
+  }  async ngOnInit(): Promise<void> {
     // Check user session and set login state
     this.isLoggedIn = await this.authService.checkSession();
+    // Update userPerms from localStorage after session check
+    const storedPerms = localStorage.getItem('userPerms');
+    this.userPerms = storedPerms ? Number(storedPerms) : 0;
+    console.log('ngOnInit - isLoggedIn:', this.isLoggedIn, 'userPerms:', this.userPerms);
+    console.log('ngOnInit - userPerms from localStorage:', localStorage.getItem('userPerms'));
+    
     // Initialize particles
     await this.particlesService.init(async () => {});
     await loadFirePreset(tsParticles);

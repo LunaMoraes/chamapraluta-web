@@ -18,16 +18,17 @@ export class AuthenticationService {
   private tokenClient: any;
   
   // Subject to notify components when login state changes
-  loginStateChanged = new Subject<boolean>();
-  constructor(private http: HttpClient, private router: Router) {
+  loginStateChanged = new Subject<boolean>();  constructor(private http: HttpClient, private router: Router) {
     // Initialize from localStorage
     const logged = localStorage.getItem('isLoggedIn') === 'true';
     this.isLoggedIn = logged;
+    console.log('AuthService constructor - logged:', logged);
     if (logged) {
       this.userID = Number(localStorage.getItem('userId')) || 0;
       this.userPerms = Number(localStorage.getItem('userPerms')) || 0;
       this.accessToken = localStorage.getItem('accessToken') || '';
       this.refreshToken = localStorage.getItem('refreshToken') || '';
+      console.log('AuthService constructor - userPerms:', this.userPerms, 'from localStorage:', localStorage.getItem('userPerms'));
     }
   }
 
@@ -249,8 +250,7 @@ export class AuthenticationService {
           { userId: Number(storedId), sessionToken: token },
           { observe: 'response' }
         )
-      );
-        if (resp.status === 200 && resp.body) {
+      );        if (resp.status === 200 && resp.body) {
         // on success, reinitialize session
         this.userID = resp.body.userId;
         this.userPerms = resp.body.userPerms;
@@ -270,6 +270,7 @@ export class AuthenticationService {
           this.refreshToken = localStorage.getItem('refreshToken') || '';
         }
         
+        console.log('checkSession - updated userPerms:', this.userPerms);
         return true;
       } else {
         // Invalid response, clear session

@@ -1,0 +1,54 @@
+<div class="admin-panel">
+  <h2>Painel Administrativo</h2>
+  
+  <div class="pending-approvals-section">
+    <h3>Aprovações Pendentes</h3>
+    
+    <div *ngIf="loading" class="loading-message">
+      Carregando organizadores pendentes...
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+      <button (click)="loadPendingOrganizers()" class="retry-button">Tentar novamente</button>
+    </div>
+    
+    <div *ngIf="!loading && !error && pendingOrganizers.length === 0" class="no-data-message">
+      Não há organizadores pendentes no momento.
+    </div>
+    
+    <table *ngIf="!loading && !error && pendingOrganizers.length > 0" class="pending-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>E-mail</th>
+          <th>Organização</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let organizer of pendingOrganizers">
+          <td>{{ organizer.name }}</td>
+          <td>{{ organizer.phone }}</td>
+          <td>{{ organizer.email }}</td>
+          <td>{{ organizer.organization }}</td>
+          <td class="actions-cell">
+            <button 
+              (click)="approveOrganizer(organizer.id)" 
+              class="approve-button"
+              title="Aprovar organizador">
+              Aprovar
+            </button>
+            <button 
+              (click)="denyOrganizer(organizer.id)" 
+              class="deny-button"
+              title="Negar organizador">
+              Negar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
