@@ -7,7 +7,7 @@
   </div>  <nav class="app-nav" [class.open]="isMenuOpen">
     <button class="nav-button" (click)="navigateToDashboard()">Home</button>
     <ng-container *ngIf="isLoggedIn">
-      <button class="nav-button">Perfil</button>
+      <button class="nav-button" (click)="goToDiscord()">Discord</button>
       <button class="nav-button" *ngIf="userPerms === 2" (click)="navigateToAdmin()">Admin</button>
       <button class="nav-button" (click)="logout()">Sair</button>
     </ng-container>
